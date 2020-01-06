@@ -1,2 +1,5 @@
 Team -- 2019-01-05 19:15
 	- finalized design doc
+
+Brian Moses -- 2019-01-06 14:45
+	- added routes for login
