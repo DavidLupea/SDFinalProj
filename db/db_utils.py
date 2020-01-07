@@ -1,8 +1,8 @@
 import sqlite3
 
-
+# untested
 def add_user(username, password):
-    db = sqlite3.connect("data/database.db")
+    db = sqlite3.connect("database.db")
     c = db.cursor()
 
     command = 'INSERT INTO users VALUES ({}, {}, {}, {})'
