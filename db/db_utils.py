@@ -21,6 +21,5 @@ def check_registration(username):
 def is_valid_login(username, password):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-
     c.execute("SELECT * FROM users WHERE username = ? AND password = ?;", (username, password))
-    return c.fetchone() is None
+    return c.fetchone() is not None

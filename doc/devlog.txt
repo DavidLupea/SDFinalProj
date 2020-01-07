@@ -3,3 +3,10 @@ Team -- 2019-01-05 19:15
 
 Brian Moses -- 2019-01-06 14:45
 	- added routes for login
+
+Mohidul Abedin -- 2019-01-07 17:56
+	- finished up:
+		- registering
+		- logging into session
+		- logging out
+	

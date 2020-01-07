@@ -3,7 +3,7 @@ from db import db_utils, db_builder
 import os
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(32)
 db_builder.create_tables()
 
 @app.route("/")
@@ -44,9 +44,10 @@ def auth_register():
 
 @app.route("/logout")
 def logout():
-	return redirect(url_for("root"))
+    session.clear()
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.debug = True
-	app.secret_key()
+    # app.secret_key()
     app.run()
