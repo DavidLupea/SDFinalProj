@@ -1,5 +1,6 @@
 from flask import Flask, session, render_template, request, redirect, url_for
 from db import db_utils, db_builder
+import os
 
 app = Flask(__name__)
 
@@ -7,11 +8,28 @@ db_builder.create_tables()
 
 @app.route("/")
 def root():
-	return render_template("login.html")
+    if "username" in session:
+        return render_template("main.html")
+    else:
+        return redirect(url_for("login"))
 
-@app.route("/auth")
-def auth():
-	return render_template("main.html")
+@app.route("/login")
+def login():
+	print(len(request.args))
+	if len(request.args) == 3:
+	    # User entered login information
+		username = request.args["username"]
+		password = request.args["password"]
+
+		print("---------------")
+		if db_utils.is_valid_login(username, password):
+			session["username"] = username
+			print("Logged into account with username: " + username)
+			return render_template("main.html")
+		else:
+			print("Wrong username or password")
+
+	return render_template("login.html")
 
 @app.route("/register")
 def register():
@@ -30,4 +48,5 @@ def logout():
 
 if __name__ == "__main__":
     app.debug = True
+	app.secret_key()
     app.run()
