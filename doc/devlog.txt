@@ -3,3 +3,20 @@ Team -- 2019-01-05 19:15
 
 Brian Moses -- 2019-01-06 14:45
 	- added routes for login
+
+Mohidul Abedin -- 2019-01-07 17:56
+	- finished up:
+		- registering
+		- logging into session
+		- logging out
+
+Brian Moses -- 2019-01-07 22:14
+	- fixed bug with login
+
+David Lupea -- 2019-01-08 09:00
+	- deadlines.txt
+		- Includes deadlines for each member
+	- Changes to design document:
+		- Added reason behind Bootstrap
+		- Removed unnecessary arrow in sitemap
+		- Added a few columns to database
