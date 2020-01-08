@@ -45,6 +45,10 @@ def auth_register():
 def create_project():
     return render_template("create_project.html")
 
+@app.route("/view_projects")
+def view_projects():
+    return render_template("project_lists.html")
+
 @app.route("/logout")
 def logout():
     session.clear()
