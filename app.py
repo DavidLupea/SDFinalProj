@@ -41,6 +41,10 @@ def auth_register():
 		return render_template("main.html")
 	return render_template("register.html")   ### ADD FLASH ERROR
 
+@app.route("/create_project")
+def create_project():
+    return render_template("create_project.html")
+
 @app.route("/logout")
 def logout():
     session.clear()
