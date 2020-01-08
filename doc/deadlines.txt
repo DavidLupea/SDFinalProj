@@ -1,0 +1,9 @@
+Devin Lin
+1-9 : Make a requirements.txt file that installs all of our imports.
+1-12 : Bootstrap in login and homepages.
+
+Mohidul Abedin
+1-9 : Finish database work and helper file.
+
+Brian Moses
+1-9 : Implement and roughly connect all pages on sitemap.
