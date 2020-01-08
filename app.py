@@ -20,9 +20,8 @@ def login():
 	    # User entered login information
 		username = request.args["username"]
 		password = request.args["password"]
-
-		print("---------------")
-		if db_utils.is_valid_login(username, password):
+		full_name = request.args["full_name"]
+		if db_utils.is_valid_login(username, password, full_name):
 			session["username"] = username
 			print("Logged into account with username: " + username)
 			return render_template("main.html")
@@ -38,7 +37,7 @@ def register():
 @app.route("/auth_register")
 def auth_register():
 	if db_utils.check_registration(request.args["username"]) == 0:
-		db_utils.add_user(request.args["username"], request.args["full_name"], request.args["password"] )
+		db_utils.add_user(request.args["username"], request.args["password"], request.args["full_name"] )
 		return render_template("main.html")
 	return render_template("register.html")   ### ADD FLASH ERROR
 

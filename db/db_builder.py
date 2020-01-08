@@ -6,7 +6,7 @@ def create_tables():
     c.execute("""
     CREATE TABLE IF NOT EXISTS users(
     username TEXT PRIMARY KEY,
-    full_name TEXT,
-    password TEXT
+    password TEXT,
+    full_name TEXT
     );""")
     c.close()

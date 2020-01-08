@@ -1,11 +1,10 @@
 import sqlite3
 
-# untested
 def add_user(username, password, full_name):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    command = 'INSERT INTO users VALUES ({}, {}, {})'
-    command = command.format(username, full_name, password)
+    command = "INSERT INTO users VALUES ('{}', '{}', '{}')"
+    command = command.format(username, password, full_name)
     c.execute(command)
 
     db.commit()
@@ -14,12 +13,16 @@ def add_user(username, password, full_name):
 def check_registration(username):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    return len(list(c.execute("SELECT * FROM users WHERE username = {}".format(username))))
+    return len(list(c.execute("SELECT * FROM users WHERE username = '{}'".format(username))))
     db.close()
 
 
-def is_valid_login(username, password):
+def is_valid_login(username, password, full_name):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    c.execute("SELECT * FROM users WHERE username = ? AND password = ?;", (username, password))
-    return c.fetchone() is not None
+    print(username)
+    print(password)
+    print(full_name)
+    print (len(list(c.execute("SELECT * FROM users WHERE username = '{}' AND password = '{}' AND full_name = '{}';".format(username, password, full_name)))))
+    return len(list(c.execute("SELECT * FROM users WHERE username = '{}' AND password = '{}' AND full_name = '{}';".format(username, password, full_name))))
+    db.close()

@@ -9,4 +9,6 @@ Mohidul Abedin -- 2019-01-07 17:56
 		- registering
 		- logging into session
 		- logging out
-	
+
+Brian Moses -- 2019-01-07 22:14
+	- fixed bug with login
