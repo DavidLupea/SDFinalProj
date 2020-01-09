@@ -42,5 +42,8 @@
     </form>
     <hr>
     <b> These are your current tasks: </b>
+    {%for i in task%}
+    {%task[i]%}
+    {%endfor%}
 
 {%endif%}

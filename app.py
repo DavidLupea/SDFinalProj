@@ -68,10 +68,11 @@ def view_projects():
 @app.route("/actually_view_projects")
 def list_projects():
     username = request.args["project"].split("_")[0]
+    tasks = db_utils.get_task(session["project"])
     if session["username"] == username:
         session["project"] = request.args["project"]
-        return render_template("project.html", owner = True)
-    return render_template("project.html")
+        return render_template("project.html", owner = True, task = tasks)
+    return render_template("project.html", task = tasks)
 
 @app.route("/process_task")
 def process_task():
