@@ -40,7 +40,7 @@ Second, open your terminal. Then, type in the following commands sequentially:
 
 * git clone https://github.com/DavidLupea/SDFinalProj.git
 * cd SDFinalProj
-* pip install -r requirements.txt
+* pip3 install -r requirements.txt
 * python3 app.py
 
 Then, navigate to 127.0.0.1:5000 in a web browser. Copy and paste your MapQuest API key into the space indicated on the website.
