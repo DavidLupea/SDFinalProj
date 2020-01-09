@@ -9,15 +9,19 @@ def create_tables():
     password TEXT,
     full_name TEXT
     );""")
-
+    c.close()
+def create_username(username):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
     c.execute("""
-    CREATE TABLE IF NOT EXISTS user_profile(
+    CREATE TABLE IF NOT EXISTS {} (
     project TEXT PRIMARY KEY,
     reddit_posts INT,
     address TEXT
-    );""")
+    );""".format(username))
     c.close()
 
+    
 def create_projects(owner, projectname):
     db = sqlite3.connect("database.db")
     c = db.cursor()

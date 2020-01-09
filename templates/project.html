@@ -1,0 +1,23 @@
+This your projects. GOOD <br>
+{%if owner%}
+    <form action = "\process_task" method = "GET">
+        Username:
+        <br>
+        <input type = "text" name = "username">
+        <br>
+        Task Name:
+        <input type = "text" name = "task_name">
+        <br>
+        Description:
+        <br>
+        <input type = "text" name = "task_desc">
+        <br>
+        Date:
+        <br>
+        <input type="date" id="start" name="due_date"
+        min="2020-01-01">
+        <br>
+        <input type = "submit" value = "Submit">
+    </form>
+
+{%endif%}

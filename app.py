@@ -37,10 +37,11 @@ def register():
 
 @app.route("/auth_register")
 def auth_register():
-	if db_utils.check_registration(request.args["username"]) == 0:
-		db_utils.add_user(request.args["username"], request.args["password"], request.args["full_name"] )
-		return render_template("login.html")
-	return render_template("register.html")   ### ADD FLASH ERROR
+    if db_utils.check_registration(request.args["username"]) == 0:
+        db_utils.add_user(request.args["username"], request.args["password"], request.args["full_name"] )
+        db_builder.create_username(request.args["username"])
+        return render_template("login.html")
+    return render_template("register.html")   ### ADD FLASH ERROR
 
 @app.route("/create_project")
 def create_project():
@@ -54,17 +55,36 @@ def process_project():
     i = 1
     while (i < len(request.args)):
         db_utils.add_member(project_name, list(members.values())[i])
+        db_utils.add_project(list(members.values())[i], project_name)
         i += i
     return render_template("main.html")
 
 @app.route("/view_projects")
 def view_projects():
-    return render_template("project_lists.html")
-    
+    project_list = db_utils.get_projects(session["username"]).split(" ")[:-1]
+    print(project_list)
+    return render_template("project_lists.html", project_list = project_list)
+
+@app.route("/actually_view_projects")
+def list_projects():
+    username = request.args["project"].split("_")[0]
+    if session["username"] == username:
+        session["project"] = request.args["project"]
+        return render_template("project.html", owner = "true")
+    return render_template("project.html")
+
+@app.route("/process_task")
+def process_task():
+    db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"])
+    return render_template("project.html")
+
+
+
+
 @app.route("/logout")
 def logout():
     session.clear()
-    return render_template("main.html")
+    return redirect(url_for("root"))
 
 if __name__ == "__main__":
     app.debug = True
