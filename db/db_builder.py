@@ -33,5 +33,5 @@ def create_projects(owner, projectname):
     meeting_desc TEXT,
     meeting_location TEXT,
     meeting_date TEXT
-    );""")
+    );""".format(projectname))
     c.close()

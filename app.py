@@ -15,20 +15,21 @@ def root():
 
 @app.route("/login")
 def login():
-	print(len(request.args))
-	if len(request.args) == 3:
-	    # User entered login information
-		username = request.args["username"]
-		password = request.args["password"]
-		full_name = request.args["full_name"]
-		if db_utils.is_valid_login(username, password, full_name):
-			session["username"] = username
-			print("Logged into account with username: " + username)
-			return render_template("main.html")
-		else:
-			print("Wrong username or password")
+    if len(request.args) == 3:
+        # User entered login information
+        username = request.args["username"]
+        password = request.args["password"]
+        full_name = request.args["full_name"]
+        if db_utils.is_valid_login(username, password, full_name):
+            session["username"] = username
+            print("---------------------------------------")
+            print("Logged into account with username: " + username)
+            print("---------------------------------------")
+            return render_template("main.html")
+        else:
+            print("Wrong username or password")
 
-	return render_template("login.html")
+    return render_template("login.html")
 
 @app.route("/register")
 def register():
@@ -38,19 +39,29 @@ def register():
 def auth_register():
 	if db_utils.check_registration(request.args["username"]) == 0:
 		db_utils.add_user(request.args["username"], request.args["password"], request.args["full_name"] )
-		return render_template("main.html")
+		return render_template("login.html")
 	return render_template("register.html")   ### ADD FLASH ERROR
 
 @app.route("/create_project")
 def create_project():
     return render_template("create_project.html")
 
+@app.route("/process_project")
+def process_project():
+    db_builder.create_projects(session["username"], request.args["title"])
+    members = request.args.to_dict()
+    project_name = session["username"] + "_" + request.args["title"]
+    i = 1
+    while (i < len(request.args)):
+        db_utils.add_member(project_name, list(members.values())[i])
+        i += i
+    return render_template("main.html")
+
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("login"))
+    return render_template("main.html")
 
 if __name__ == "__main__":
     app.debug = True
-    # app.secret_key()
     app.run()
