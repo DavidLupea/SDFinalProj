@@ -26,4 +26,7 @@ Mohidul Abedin and Brian Moses -- 2019-01-08 19:23
 
 Mohidul Abedin and Brian Moses -- 2019-01-08 21:43
 	- users can now view their projects
-	- owner can now assign tasks 
+	- owner can now assign tasks
+
+Mohidul Abedin and Brian Moses -- 2019-01-09 9:15
+	- added create meeting

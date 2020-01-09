@@ -60,3 +60,12 @@ def add_task(username, project_name, task_name, task_desc, due_date):
     c.execute(command)
     db.commit()
     db.close()
+
+def add_meeting(project_name, meeting_desc, meeting_location, meeting_date):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+    command = "INSERT INTO {} VALUES(NULL,NULL,NULL,NULL,NULL,NULL,'{}','{}','{}');"
+    command = command.format(project_name, meeting_desc, meeting_location, meeting_date)
+    c.execute(command)
+    db.commit()
+    db.close()
