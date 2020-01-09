@@ -22,13 +22,9 @@ def login():
         full_name = request.args["full_name"]
         if db_utils.is_valid_login(username, password, full_name):
             session["username"] = username
-            print("---------------------------------------")
-            print("Logged into account with username: " + username)
-            print("---------------------------------------")
             return render_template("main.html")
         else:
-            print("Wrong username or password")
-
+            render_template("login.html")
     return render_template("login.html")
 
 @app.route("/register")
@@ -62,15 +58,16 @@ def process_project():
 @app.route("/view_projects")
 def view_projects():
     project_list = db_utils.get_projects(session["username"]).split(" ")[:-1]
-    print(project_list)
     return render_template("project_lists.html", project_list = project_list)
 
 @app.route("/actually_view_projects")
 def list_projects():
     username = request.args["project"].split("_")[0]
-    tasks = db_utils.get_task(session["project"])
     if session["username"] == username:
         session["project"] = request.args["project"]
+        tasks = db_utils.get_task(session["project"])
+        print(tasks)
+        print(type(tasks))
         return render_template("project.html", owner = True, task = tasks)
     return render_template("project.html", task = tasks)
 

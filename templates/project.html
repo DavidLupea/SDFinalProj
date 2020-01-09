@@ -41,9 +41,11 @@
       <input type = "submit" value = "Submit">
     </form>
     <hr>
-    <b> These are your current tasks: </b>
-    {%for i in task%}
-    {%task[i]%}
-    {%endfor%}
-
-{%endif%}
+    {% endif %}
+    <b> These are the project's current tasks: </b> <br>
+    <ol>
+    {% for i in task %}
+      <!-- Make this update the database -->
+      <li> {{i}} <button> Completed {{i[0]}} </button> </li> <br> <br>
+    {% endfor %}
+    </ol>

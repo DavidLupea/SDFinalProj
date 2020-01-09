@@ -55,20 +55,21 @@ def get_projects(username):
 def add_task(username, project_name, task_name, task_desc, due_date):
     db = sqlite3.connect("database.db")
     c = db.cursor()
+    # check that the task does not already exist
     command = "INSERT INTO {} VALUES(NULL ,'{}','{}','{}','{}','{}',NULL,NULL,NULL);"
     command = command.format(project_name, task_name, task_desc, username, "Incomplete", due_date)
     c.execute(command)
     db.commit()
     db.close()
 
-def get_task(project_name) -> list:
+def get_task(project_name):
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "SELECT task_desc, task_name, task_status, task_assigned, task_due_date FROM {}".format(project_name)
-    c.execute(command)
-    db.commit()
+    tasks = list(c.execute(command))
     db.close()
-    
+    return tasks
+
 def add_meeting(project_name, meeting_desc, meeting_location, meeting_date):
     db = sqlite3.connect("database.db")
     c = db.cursor()
