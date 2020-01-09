@@ -80,14 +80,8 @@ def process_task():
 
 @app.route("/process_meeting")
 def process_meeting():
-    print(request.args["meeting_desc"])
-    print(request.args["meeting_location"])
-    print(request.args["meeting_date"])
     db_utils.add_meeting(session["project"], request.args["meeting_desc"], request.args["meeting_location"], request.args["meeting_date"])
     return render_template("project.html", owner = True)
-
-
-
 
 @app.route("/logout")
 def logout():
