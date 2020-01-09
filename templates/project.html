@@ -43,9 +43,8 @@
     <hr>
     {% endif %}
     <b> These are the project's current tasks: </b> <br>
-    <ol>
+    <form action = "\complete_task" method = "GET">
     {% for i in task %}
-      <!-- Make this update the database -->
-      <li> {{i}} <button> Completed {{i[0]}} </button> </li> <br> <br>
+      {{i}} <input type = "submit" value = "Submit {{i[0]}}" name = "submit"> <br> <br>
     {% endfor %}
-    </ol>
+    </form>

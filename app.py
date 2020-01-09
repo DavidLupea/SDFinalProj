@@ -66,25 +66,36 @@ def list_projects():
     if session["username"] == username:
         session["project"] = request.args["project"]
         tasks = db_utils.get_task(session["project"])
-        print(tasks)
-        print(type(tasks))
         return render_template("project.html", owner = True, task = tasks)
     return render_template("project.html", task = tasks)
 
 @app.route("/process_task")
 def process_task():
     db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"])
-    return render_template("project.html", owner = True)
+    tasks = db_utils.get_task(session["project"])
+    return render_template("project.html", owner = True, task = tasks)
 
 @app.route("/process_meeting")
 def process_meeting():
     db_utils.add_meeting(session["project"], request.args["meeting_desc"], request.args["meeting_location"], request.args["meeting_date"])
-    return render_template("project.html", owner = True)
+    tasks = db_utils.get_task(session["project"])
+    return render_template("project.html", owner = True, task = tasks)
+
+@app.route("/complete_task")
+def complete_task():
+    task_name = request.args["submit"].split(" ")[1]
+    db_utils.complete_task(session["project"], task_name)
+    username = session["project"].split("_")[0]
+    if session["username"] == username:
+        tasks = db_utils.get_task(session["project"])
+        return render_template("project.html", owner = True, task = tasks)
+    return render_template("project.html", task = tasks)
 
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("root"))
+
 
 if __name__ == "__main__":
     app.debug = True

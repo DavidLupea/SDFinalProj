@@ -65,7 +65,7 @@ def add_task(username, project_name, task_name, task_desc, due_date):
 def get_task(project_name):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    command = "SELECT task_desc, task_name, task_status, task_assigned, task_due_date FROM {}".format(project_name)
+    command = "SELECT task_name, task_desc, task_status, task_assigned, task_due_date FROM {}".format(project_name)
     tasks = list(c.execute(command))
     db.close()
     return tasks
@@ -75,6 +75,16 @@ def add_meeting(project_name, meeting_desc, meeting_location, meeting_date):
     c = db.cursor()
     command = "INSERT INTO {} VALUES(NULL,NULL,NULL,NULL,NULL,NULL,'{}','{}','{}');"
     command = command.format(project_name, meeting_desc, meeting_location, meeting_date)
+    c.execute(command)
+    db.commit()
+    db.close()
+
+def complete_task(project_name, task_name):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+    command = "UPDATE {} SET task_status = 'Complete' WHERE task_name ='{}'"
+    command = command.format(project_name, task_name)
+    print(command)
     c.execute(command)
     db.commit()
     db.close()
