@@ -68,15 +68,24 @@ def view_projects():
 @app.route("/actually_view_projects")
 def list_projects():
     username = request.args["project"].split("_")[0]
+    tasks = db_utils.get_task(session["project"])
     if session["username"] == username:
         session["project"] = request.args["project"]
-        return render_template("project.html", owner = "true")
-    return render_template("project.html")
+        return render_template("project.html", owner = True, task = tasks)
+    return render_template("project.html", task = tasks)
 
 @app.route("/process_task")
 def process_task():
     db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"])
-    return render_template("project.html")
+    return render_template("project.html", owner = True)
+
+@app.route("/process_meeting")
+def process_meeting():
+    print(request.args["meeting_desc"])
+    print(request.args["meeting_location"])
+    print(request.args["meeting_date"])
+    db_utils.add_meeting(session["project"], request.args["meeting_desc"], request.args["meeting_location"], request.args["meeting_date"])
+    return render_template("project.html", owner = True)
 
 
 

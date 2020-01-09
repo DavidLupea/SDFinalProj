@@ -1,11 +1,14 @@
-This your projects. GOOD <br>
+<a href = "/"> Back to main page </a>
+<hr>
 {%if owner%}
+  <b> Add task: </b> <br>
     <form action = "\process_task" method = "GET">
         Username:
         <br>
         <input type = "text" name = "username">
         <br>
         Task Name:
+        <br>
         <input type = "text" name = "task_name">
         <br>
         Description:
@@ -14,10 +17,33 @@ This your projects. GOOD <br>
         <br>
         Date:
         <br>
-        <input type="date" id="start" name="due_date"
+        <input type="date" id="start_task" name="due_date"
         min="2020-01-01">
-        <br>
+        <br> <br>
         <input type = "submit" value = "Submit">
     </form>
+    <hr>
+    <b> Add meetup: </b> <br>
+    <form action = "\process_meeting" method = "GET">
+      Meeting description:
+      <br>
+      <input type = "text" name = "meeting_desc">
+      <br>
+      Meeting location:
+      <br>
+      <input type = "text" name = "meeting_location">
+      <br>
+      Meeting Date:
+      <br>
+      <input type="date" id="start_meeting" name="meeting_date"
+      min="2020-01-01">
+      <br> <br>
+      <input type = "submit" value = "Submit">
+    </form>
+    <hr>
+    <b> These are your current tasks: </b>
+    {%for i in task%}
+    {%task[i]%}
+    {%endfor%}
 
 {%endif%}
