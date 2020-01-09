@@ -57,6 +57,10 @@ def process_project():
         i += i
     return render_template("main.html")
 
+@app.route("/view_projects")
+def view_projects():
+    return render_template("project_lists.html")
+    
 @app.route("/logout")
 def logout():
     session.clear()
