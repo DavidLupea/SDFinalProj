@@ -15,12 +15,11 @@ def root():
 
 @app.route("/login")
 def login():
-    if len(request.args) == 3:
+    if len(request.args) == 2:
         # User entered login information
         username = request.args["username"]
         password = request.args["password"]
-        full_name = request.args["full_name"]
-        if db_utils.is_valid_login(username, password, full_name):
+        if db_utils.is_valid_login(username, password):
             session["username"] = username
             return render_template("main.html")
         else:
@@ -71,7 +70,7 @@ def list_projects():
 
 @app.route("/process_task")
 def process_task():
-    db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"])
+    db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"], request.args["crystalz"])
     tasks = db_utils.get_task(session["project"])
     return render_template("project.html", owner = True, task = tasks)
 
@@ -84,12 +83,20 @@ def process_meeting():
 @app.route("/complete_task")
 def complete_task():
     task_name = request.args["submit"].split(" ")[1]
-    db_utils.complete_task(session["project"], task_name)
+    task_assigned = request.args["submit"].split(" ")[6]
+    crystalz = request.args["submit"].split(" ")[3]
+    db_utils.complete_task(session["project"], task_name, crystalz,task_assigned)
     username = session["project"].split("_")[0]
     if session["username"] == username:
         tasks = db_utils.get_task(session["project"])
         return render_template("project.html", owner = True, task = tasks)
     return render_template("project.html", task = tasks)
+
+@app.route("/shop")
+def shop():
+    crystalz = db_utils.get_crystalz(session["username"])
+    return render_template("shop.html", crystalz = crystalz)
+
 
 @app.route("/logout")
 def logout():

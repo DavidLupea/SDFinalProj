@@ -19,6 +19,10 @@
         <br>
         <input type="date" id="start_task" name="due_date"
         min="2020-01-01">
+        <br>
+        Crystalz (increments of 10):
+        <br>
+        <input type="number" name="crystalz" min="10" max="1000" step = "10">
         <br> <br>
         <input type = "submit" value = "Submit">
     </form>
@@ -45,6 +49,6 @@
     <b> These are the project's current tasks: </b> <br>
     <form action = "\complete_task" method = "GET">
     {% for i in task %}
-      {{i}} <input type = "submit" value = "Submit {{i[0]}}" name = "submit"> <br> <br>
+      {{i}} <input type = "submit" value = "Submit {{i[0]}} for {{i[5]}} for user {{i[2]}}" name = "submit"> <br> <br>
     {% endfor %}
     </form>

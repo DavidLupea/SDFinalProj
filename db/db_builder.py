@@ -7,7 +7,8 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS users(
     username TEXT PRIMARY KEY,
     password TEXT,
-    full_name TEXT
+    full_name TEXT,
+    crystalz INT
     );""")
     c.close()
 def create_username(username):
@@ -16,12 +17,11 @@ def create_username(username):
     c.execute("""
     CREATE TABLE IF NOT EXISTS {} (
     project TEXT PRIMARY KEY,
-    reddit_posts INT,
     address TEXT
     );""".format(username))
     c.close()
 
-    
+
 def create_projects(owner, projectname):
     db = sqlite3.connect("database.db")
     c = db.cursor()
@@ -34,6 +34,7 @@ def create_projects(owner, projectname):
     task_assigned TEXT,
     task_status TEXT,
     task_due_date TEXT,
+    task_worth INT,
     meeting_desc TEXT,
     meeting_location TEXT,
     meeting_date TEXT
