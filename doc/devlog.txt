@@ -36,3 +36,8 @@ Devin Lin
 Brian Moses -- 2019-01-09 14:40
 	- fixed view tasks
 	- started on comlete tasks
+
+
+Mohidul Abedin -- 2019-01-11 19:58
+	- added a balance system
+	- finishing task now grants CRYSTALZ
