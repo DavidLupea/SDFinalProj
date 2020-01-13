@@ -31,8 +31,14 @@ Mohidul Abedin and Brian Moses -- 2019-01-08 21:43
 Mohidul Abedin and Brian Moses -- 2019-01-09 9:15
 	- added create meeting
 
-Devin Lin
-
 Brian Moses -- 2019-01-09 14:40
 	- fixed view tasks
 	- started on comlete tasks
+
+
+Mohidul Abedin -- 2019-01-11 19:58
+	- added a balance system
+	- finishing task now grants CRYSTALZ
+
+Devin Lin -- 2020-01-12 20:02
+	- added bootstrap to login and register pages
