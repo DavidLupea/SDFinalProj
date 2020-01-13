@@ -57,7 +57,7 @@ def process_project():
 
 @app.route("/view_projects")
 def view_projects():
-    project_list = db_utils.get_projects(session["username"]).split(" ")[:-1]
+    project_list = db_utils.get_projects(session["username"])
     return render_template("project_lists.html", project_list = project_list)
 
 @app.route("/actually_view_projects")

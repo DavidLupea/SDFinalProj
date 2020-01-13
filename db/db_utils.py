@@ -1,6 +1,15 @@
 import sqlite3
 
+def replace_spaces(data):
+	return data.replace(" ", "-")
+	
+def replace_dashes(data):
+	return data.replace("-", " ")
+	
 def add_user(username, password, full_name):
+	username = replace_spaces(username)
+	password = replace_spaces(password)
+	full_name = replace_spaces(full_name)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO users VALUES ('{}', '{}', '{}')"
@@ -11,18 +20,24 @@ def add_user(username, password, full_name):
     db.close()
 
 def check_registration(username):
+	username = replace_spaces(username)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     return len(list(c.execute("SELECT * FROM users WHERE username = '{}'".format(username))))
     db.close()
 
 def is_valid_login(username, password, full_name):
+	username = replace_spaces(username)
+	password = replace_spaces(password)
+	full_name = replace_spaces(full_name)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     return len(list(c.execute("SELECT * FROM users WHERE username = '{}' AND password = '{}' AND full_name = '{}';".format(username, password, full_name))))
     db.close()
 
 def add_member(project, member):
+	project = replace_spaces(project)
+	member = replace_spaces(member)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO {} VALUES('{}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);"
@@ -32,6 +47,8 @@ def add_member(project, member):
     db.close()
 
 def add_project(username, project_name):
+	username = replace_spaces(username)
+	project_name = replace_spaces(project_name)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO {} VALUES('{}', 0, NULL);"
@@ -41,18 +58,22 @@ def add_project(username, project_name):
     db.close()
 
 def get_projects(username):
+	username = replace_spaces(username)
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    all_projects = ""
+    all_projects = []
     command = "SELECT project FROM {};".format(username)
     for project in list(db.execute(command)):
-        print(project[0])
-        all_projects += str(project[0]) + " "
+        project[0] = remove_dashes(project[0])
+        all_projects.append(str(project[0]))
     return all_projects
     db.commit()
     db.close()
 
+# HERE
+
 def add_task(username, project_name, task_name, task_desc, due_date):
+	
     db = sqlite3.connect("database.db")
     c = db.cursor()
     # check that the task does not already exist
