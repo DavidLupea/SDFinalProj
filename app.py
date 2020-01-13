@@ -15,7 +15,7 @@ def root():
 
 @app.route("/login")
 def login():
-    if len(request.args) == 2:
+    if len(request.args) >= 2:
         # User entered login information
         username = request.args["username"]
         password = request.args["password"]
