@@ -1,5 +1,11 @@
 import sqlite3
 
+def replace_spaces(data):
+	return data.replace(" ", "z")
+
+def replace_dashes(data):
+	return data.replace("z", " ")
+
 def create_tables():
     db = sqlite3.connect("database.db")
     c = db.cursor()
@@ -11,7 +17,9 @@ def create_tables():
     crystalz INT
     );""")
     c.close()
+
 def create_username(username):
+    username = replace_spaces(username)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     c.execute("""
@@ -23,6 +31,9 @@ def create_username(username):
 
 
 def create_projects(owner, projectname):
+    projectname = replace_spaces(projectname)
+    owner = replace_spaces(owner)
+    print(projectname)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     projectname = owner + "_" + projectname

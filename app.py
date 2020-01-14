@@ -57,6 +57,8 @@ def process_project():
 @app.route("/view_projects")
 def view_projects():
     project_list = db_utils.get_projects(session["username"])
+    print("PROJECT LIST")
+    print(project_list)
     return render_template("project_lists.html", project_list = project_list)
 
 @app.route("/actually_view_projects")
@@ -64,6 +66,9 @@ def list_projects():
     username = request.args["project"].split("_")[0]
     if session["username"] == username:
         session["project"] = request.args["project"]
+        print(request.args)
+        print("SESSION OF PROJECT")
+        print(session["project"])
         tasks = db_utils.get_task(session["project"])
         return render_template("project.html", owner = True, task = tasks)
     return render_template("project.html", task = tasks)
