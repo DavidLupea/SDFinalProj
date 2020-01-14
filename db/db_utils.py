@@ -7,9 +7,9 @@ def replace_dashes(data):
 	return data.replace("-", " ")
 
 def add_user(username, password, full_name):
-	username = replace_spaces(username)
-	password = replace_spaces(password)
-	full_name = replace_spaces(full_name)
+    username = replace_spaces(username)
+    password = replace_spaces(password)
+    full_name = replace_spaces(full_name)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO users VALUES ('{}', '{}', '{}', 100)"
@@ -20,23 +20,23 @@ def add_user(username, password, full_name):
     db.close()
 
 def check_registration(username):
-	username = replace_spaces(username)
+    username = replace_spaces(username)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     return len(list(c.execute("SELECT * FROM users WHERE username = '{}'".format(username))))
     db.close()
 
 def is_valid_login(username, password):
-	username = replace_spaces(username)
-	password = replace_spaces(password)
+    username = replace_spaces(username)
+    password = replace_spaces(password)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     return len(list(c.execute("SELECT * FROM users WHERE username = '{}' AND password = '{}';".format(username, password))))
     db.close()
 
 def add_member(project, member):
-	project = replace_spaces(project)
-	member = replace_spaces(member)
+    project = replace_spaces(project)
+    member = replace_spaces(member)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO {} VALUES('{}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);"
@@ -46,8 +46,8 @@ def add_member(project, member):
     db.close()
 
 def add_project(username, project_name):
-	username = replace_spaces(username)
-	project_name = replace_spaces(project_name)
+    username = replace_spaces(username)
+    project_name = replace_spaces(project_name)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "INSERT INTO {} VALUES('{}', NULL);"
@@ -57,7 +57,7 @@ def add_project(username, project_name):
     db.close()
 
 def get_projects(username):
-	username = replace_spaces(username)
+    username = replace_spaces(username)
     db = sqlite3.connect("database.db")
     c = db.cursor()
     all_projects = []
