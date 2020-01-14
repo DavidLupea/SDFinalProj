@@ -1,54 +1,65 @@
-<a href = "/"> Back to main page </a>
-<hr>
-{%if owner%}
-  <b> Add task: </b> <br>
-    <form action = "\process_task" method = "GET">
-        Username:
-        <br>
-        <input type = "text" name = "username">
-        <br>
-        Task Name:
-        <br>
-        <input type = "text" name = "task_name">
-        <br>
-        Description:
-        <br>
-        <input type = "text" name = "task_desc">
-        <br>
-        Date:
-        <br>
-        <input type="date" id="start_task" name="due_date"
-        min="2020-01-01">
-        <br>
-        Crystalz (increments of 10):
-        <br>
-        <input type="number" name="crystalz" min="10" max="1000" step = "10">
-        <br> <br>
-        <input type = "submit" value = "Submit">
-    </form>
-    <hr>
-    <b> Add meetup: </b> <br>
-    <form action = "\process_meeting" method = "GET">
-      Meeting description:
-      <br>
-      <input type = "text" name = "meeting_desc">
-      <br>
-      Meeting location:
-      <br>
-      <input type = "text" name = "meeting_location">
-      <br>
-      Meeting Date:
-      <br>
-      <input type="date" id="start_meeting" name="meeting_date"
-      min="2020-01-01">
-      <br> <br>
-      <input type = "submit" value = "Submit">
-    </form>
-    <hr>
-    {% endif %}
-    <b> These are the project's current tasks: </b> <br>
-    <form action = "\complete_task" method = "GET">
-    {% for i in task %}
-      {{i}} <input type = "submit" value = "Submit '{{i[0]}}' for '{{i[5]}}' for user '{{i[2]}}'" name = "submit"> <br> <br>
-    {% endfor %}
-    </form>
+{% extends 'templates.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+      {%if owner%}
+        <b> Add task: </b> <br>
+          <form action = "\process_task" method = "GET">
+            Username:
+            <br>
+            <input type = "text" name = "username">
+            <br>
+            Task Name:
+            <br>
+            <input type = "text" name = "task_name">
+            <br>
+            Description:
+            <br>
+            <input type = "text" name = "task_desc">
+            <br>
+            Date:
+            <br>
+            <input type="date" id="start_task" name="due_date"
+            min="2020-01-01">
+            <br>
+            Crystalz (increments of 10):
+            <br>
+            <input type="number" name="crystalz" min="10" max="1000" step = "10">
+            <br> <br>
+            <input type = "submit" value = "Submit">
+          </form>
+          <hr>
+          <b> Add meetup: </b> <br>
+          <form action = "\process_meeting" method = "GET">
+            Meeting description:
+            <br>
+            <input type = "text" name = "meeting_desc">
+            <br>
+            Meeting location:
+            <br>
+            <input type = "text" name = "meeting_location">
+            <br>
+            Meeting Date:
+            <br>
+            <input type="date" id="start_meeting" name="meeting_date"
+            min="2020-01-01">
+            <br> <br>
+            <input type = "submit" value = "Submit">
+          </form>
+          <hr>
+        {% endif %}
+          <b> These are the project's current tasks: </b> <br>
+          <form action = "\complete_task" method = "GET">
+            {% for i in task %}
+              {{i}} <input type = "submit" value = "Submit '{{i[0]}}' for '{{i[5]}}' for user '{{i[2]}}'" name = "submit"> <br> <br>
+            {% endfor %}
+          </form>
+    </div>
+  </div>
+</div>
