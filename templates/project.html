@@ -1,13 +1,16 @@
-{% extends 'templates.html' %}
+<!-- {% extends 'templates.html' %} -->
 
-{% block title %}
+<!-- {% block title %}
     Login
-{% endblock %}
+{% endblock %} -->
 
-{% block body %}
-<div class="container">
+<!-- {% block body %} -->
+<!-- <div class="container">
   <div class="card border-0 shadow my-5">
-    <div class="card-body p-5">
+    <div class="card-body p-5"> -->
+<div>
+    <div>
+        <div>
       {%if owner%}
         <b> Add task: </b> <br>
           <form action = "\process_task" method = "GET">
@@ -41,7 +44,7 @@
             <br>
             Meeting location:
             <br>
-            <input type = "text" name = "meeting_location" required>
+            <div> <input type = "text" id = "l" name = "meeting_location" required> </div>
             <br>
             Meeting Date:
             <br>
@@ -62,6 +65,20 @@
       {% if i[3] == 'Incomplete' %}
          <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
       {% endif %}
+
+
+      <script>
+        var l = document.getElementById("l")
+
+        var add_location = function(e) {
+            console.log("Hello")
+        }
+
+        l.addEventListener("mouseover", add_location)
+      </script>
+
+
+
       <br>
       Due by: {{i[4]}} <br> <br>
     {% endfor %}
@@ -76,4 +93,5 @@
     </div>
   </div>
 </div>
-{% endblock %}
+
+<!-- {% endblock %} -->
