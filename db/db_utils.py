@@ -39,11 +39,6 @@ def add_member(project, member):
     member = replace_spaces(member)
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    print("---------------------------------------")
-    print(project)
-    print(member)
-    print("---------------------------------------")
-
     command = "INSERT INTO {} VALUES('{}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);"
     command = command.format(project, member)
     c.execute(command)
@@ -153,8 +148,13 @@ def get_crystalz(username):
     db.close()
     return crystalz[0][0]
 
-def is_valid_project():
+def is_valid_project(arguments):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
 	# in the future, needs to check:
 	# 1. if owner is in the project
+	#	compare request.args of 1 to len(request.args) with session["username"]
 	# 2. if there are users there who aren't registered
-	return True
+	# 	compare request.args of 1 to len(request.args) with users DB
+    db.close()
+    return True
