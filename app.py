@@ -6,6 +6,15 @@ app = Flask(__name__)
 app.secret_key = "apple pie"
 db_builder.create_tables()
 
+def remove_nulls(list):
+    i = 0
+    while (i < len(list)):
+        if list[i][0] == None:
+            list.pop(i)
+        else:
+            i += 1
+    return list
+
 @app.route("/")
 def root():
     if "username" in session:
@@ -65,7 +74,10 @@ def list_projects():
     if session["username"] == username:
         session["project"] = request.args["project"]
         tasks = db_utils.get_task(session["project"])
+        tasks = remove_nulls(tasks)
         meetings = db_utils.get_meeting(session["project"])
+        meetings = remove_nulls(meetings)
+
         return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
@@ -73,29 +85,32 @@ def list_projects():
 def process_task():
     db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"], request.args["crystalz"])
     tasks = db_utils.get_task(session["project"])
+    tasks = remove_nulls(tasks)
     meetings = db_utils.get_meeting(session["project"])
+    meetings = remove_nulls(meetings)
     return render_template("project.html", owner = True, task = tasks, meeting = meetings)
 
 @app.route("/process_meeting")
 def process_meeting():
     db_utils.add_meeting(session["project"], request.args["meeting_desc"], request.args["meeting_location"], request.args["meeting_date"])
     tasks = db_utils.get_task(session["project"])
+    tasks = remove_nulls(tasks)
+
     meetings = db_utils.get_meeting(session["project"])
+    meetings = remove_nulls(meetings)
 
     return render_template("project.html", owner = True, task = tasks, meeting = meetings)
 
 @app.route("/complete_task")
 def complete_task():
-    # print("------------------------------------")
-    # print(request.args["submit"])
-    # print("------------------------------------")
     task_name = request.args["submit"][request.args["submit"].find(" ") + 1:]
-    # print(task_name)
     db_utils.complete_task(session["project"], task_name)
     username = session["project"].split("_")[0]
     if session["username"] == username:
         tasks = db_utils.get_task(session["project"])
+        tasks = remove_nulls(tasks)
         meetings = db_utils.get_meeting(session["project"])
+        meetings = remove_nulls(meetings)
         return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 

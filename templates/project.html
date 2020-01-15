@@ -46,14 +46,20 @@
     </form>
     <hr>
     {% endif %}
-    <b> These are the project's current tasks: </b> <br>
+    <h3> These are the project's current tasks: </h3>
     <form action = "\complete_task" method = "GET">
     {% for i in task %}
-      {{i}} <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br> <br>
+      <b>{{i[0]}}</b> <br>
+      ({{i[1]}}) <br> <br>
+      Assigned to: {{i[2]}} <br>
+      Status: {{i[3]}} <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
+      Due by: {{i[4]}} <br> <br>
     {% endfor %}
     <hr>
-    <b> These are the project's current meetings: </b> <br>
+    <h3> These are the project's current meetings: </h3>
     {% for i in meeting %}
-      {{i}} <br> <br>
+      <b>{{i[0]}}</b> <br>
+      Located at: {{i[1]}} <br>
+      {{i[2]}} <br> <br>
     {% endfor %}
     </form>

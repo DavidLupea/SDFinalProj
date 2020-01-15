@@ -103,7 +103,7 @@ def get_meeting(project_name):
     db = sqlite3.connect("database.db")
     c = db.cursor()
 	# change the command
-    command = "SELECT task_name, task_desc, task_assigned, task_status, task_due_date, task_worth FROM {}".format(project_name)
+    command = "SELECT meeting_desc, meeting_location, meeting_date FROM {}".format(project_name)
     meetings = list(c.execute(command))
     db.close()
     return meetings
