@@ -12,25 +12,23 @@
         <b> Add task: </b> <br>
           <form action = "\process_task" method = "GET">
             Username:
-            <br>
-            <input type = "text" name = "username">
-            <br>
+            <br> <input type = "text" name = "username" required> <br>
             Task Name:
             <br>
-            <input type = "text" name = "task_name">
+            <input type = "text" name = "task_name" required>
             <br>
             Description:
             <br>
-            <input type = "text" name = "task_desc">
+            <input type = "text" name = "task_desc" required>
             <br>
             Date:
             <br>
             <input type="date" id="start_task" name="due_date"
-            min="2020-01-01">
+            min="2020-01-01" required>
             <br>
             Crystalz (increments of 10):
             <br>
-            <input type="number" name="crystalz" min="10" max="1000" step = "10">
+            <input type="number" name="crystalz" min="10" max="1000" step = "10" required>
             <br> <br>
             <input type = "submit" value = "Submit">
           </form>
@@ -39,27 +37,42 @@
           <form action = "\process_meeting" method = "GET">
             Meeting description:
             <br>
-            <input type = "text" name = "meeting_desc">
+            <input type = "text" name = "meeting_desc" required>
             <br>
             Meeting location:
             <br>
-            <input type = "text" name = "meeting_location">
+            <input type = "text" name = "meeting_location" required>
             <br>
             Meeting Date:
             <br>
             <input type="date" id="start_meeting" name="meeting_date"
-            min="2020-01-01">
+            min="2020-01-01" required>
             <br> <br>
             <input type = "submit" value = "Submit">
           </form>
           <hr>
         {% endif %}
-          <b> These are the project's current tasks: </b> <br>
-          <form action = "\complete_task" method = "GET">
-            {% for i in task %}
-              {{i}} <input type = "submit" value = "Submit '{{i[0]}}''" name = "submit"> <br> <br>
-            {% endfor %}
-          </form>
+          <h3> These are the project's current tasks: </h3>
+    <form action = "\complete_task" method = "GET">
+    {% for i in task %}
+      <b>{{i[0]}}</b> <br>
+      ({{i[1]}}) <br> <br>
+      Assigned to: {{i[2]}} <br>
+      Status: {{i[3]}}
+      {% if i[3] == 'Incomplete' %}
+         <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
+      {% endif %}
+      <br>
+      Due by: {{i[4]}} <br> <br>
+    {% endfor %}
+    <hr>
+    <h3> These are the project's current meetings: </h3>
+    {% for i in meeting %}
+      <b>{{i[0]}}</b> <br>
+      Located at: {{i[1]}} <br>
+      {{i[2]}} <br> <br>
+    {% endfor %}
+    </form>
     </div>
   </div>
 </div>

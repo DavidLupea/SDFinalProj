@@ -4,7 +4,7 @@ This is a list of all your projects. <br>
     <form method = "GET" action = "/actually_view_projects">
         <select name = "project">
             {% for project in project_list %}
-                <option value= {{project}}> {{project}} </option>
+                <option value= '{{project}}'> {{project}} </option>
             {% endfor %}
         </select>
         <input type = "submit" value = "View project" />
