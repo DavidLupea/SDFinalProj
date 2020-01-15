@@ -86,15 +86,12 @@ def process_meeting():
 
 @app.route("/complete_task")
 def complete_task():
-    print("------------------------------------")
-    print(request.args["submit"].split("'"))
-    print("------------------------------------")
-    print(request.args["submit"].split("'")[5])
-    
-    task_name = request.args["submit"].split("'")[1]
-    task_assigned = request.args["submit"].split("'")[5]
-    crystalz = request.args["submit"].split("'")[3]
-    db_utils.complete_task(session["project"], task_name, crystalz, task_assigned)
+    # print("------------------------------------")
+    # print(request.args["submit"])
+    # print("------------------------------------")
+    task_name = request.args["submit"][request.args["submit"].find(" ") + 1:]
+    # print(task_name)
+    db_utils.complete_task(session["project"], task_name)
     username = session["project"].split("_")[0]
     if session["username"] == username:
         tasks = db_utils.get_task(session["project"])

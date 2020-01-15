@@ -118,21 +118,28 @@ def add_meeting(project_name, meeting_desc, meeting_location, meeting_date):
     db.commit()
     db.close()
 
-def complete_task(project_name, task_name, crystalz, username):
+def complete_task(project_name, task_name):
     project_name = replace_spaces(project_name)
-    username = replace_spaces(username)
+
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    command = "UPDATE {} SET task_status = 'Complete' WHERE task_name ='{}';"
+
+    print(task_name)
+    command = "UPDATE {} SET task_status = 'Complete' WHERE task_name = {};"
     command = command.format(project_name, task_name)
-    user_crystalz = "SELECT crystalz FROM users WHERE username = '{}';"
-    user_crystalz = user_crystalz.format(username)
-    print(user_crystalz)
-    total_crystalz = int(crystalz) + int(list(c.execute(user_crystalz))[0][0])
-    command2 = "UPDATE users SET crystalz = {} WHERE username = '{}';"
-    command2 = command2.format(total_crystalz, username)
     c.execute(command)
-    c.execute(command2)
+
+    command2 = "SELECT task_assigned, task_worth from {} WHERE task_name = {};"
+    command2 = command2.format(project_name, task_name)
+
+    task_assigned = list(c.execute(command2))[0][0]
+    task_worth = list(c.execute(command2))[0][1]
+
+
+    command3 = "UPDATE users SET crystalz = crystalz + {} WHERE username = '{}';"
+    command3 = command3.format(task_worth, task_assigned)
+
+    c.execute(command3)
     db.commit()
     db.close()
 
