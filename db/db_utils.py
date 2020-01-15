@@ -158,3 +158,13 @@ def is_valid_project(arguments):
 	# 	compare request.args of 1 to len(request.args) with users DB
     db.close()
     return True
+
+def spend_crystalz(username):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+    new_crystalz = int(get_crystalz(username)) - 100
+    print(new_crystalz)
+    command = "UPDATE users SET crystalz = {} WHERE username = '{}';".format(new_crystalz,username)
+    c.execute(command)
+    db.commit()
+    db.close()

@@ -1,5 +1,33 @@
-Welcome to the Shop
-You have {{crystalz}} Crystalz
+{% if text %}
+<h3>{{text}} </h3>
+{% endif %}
+{%  if not url %}
+    Welcome to the Shop
+    <br>
+    <br>
+    You have {{crystalz}} Crystalz
+    <br>
+    <br>
 
+    Here you can take a break from all your work and go through random reddit posts
 
-<a href = "/"> Main </a>
+    <br>
+    <br>
+    <form action = "\process_purchase" method = "GET">
+        Buy a Reddit Post
+        <br>
+        <input type = "submit" value = "Reddit 100">
+        <br>
+    </form>
+    <br>
+{% endif %}
+    You have {{crystalz}} Crystalz
+    <a href = {{url}}> {{title}} </a>
+    <br>
+    <a href = "/"> Main </a>
+<script>
+      function NewTab(url) {
+          window.open(
+            url, "_blank");
+      }
+</script>

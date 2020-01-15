@@ -1,5 +1,6 @@
 from flask import Flask, session, render_template, request, redirect, url_for
 from db import db_utils, db_builder
+import reddit_api
 import os
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ def root():
 
 @app.route("/login")
 def login():
-    if len(request.args) >= 2:
+    if len(request.args) == 2:
         # User entered login information
         username = request.args["username"]
         password = request.args["password"]
@@ -121,6 +122,15 @@ def complete_task():
 def shop():
     crystalz = db_utils.get_crystalz(session["username"])
     return render_template("shop.html", crystalz = crystalz)
+@app.route("/process_purchase")
+def purchase():
+    crystalz = db_utils.get_crystalz(session["username"])
+    if (db_utils.get_crystalz(session["username"]) < 100):
+        return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
+    db_utils.spend_crystalz(session["username"])
+    crystalz = db_utils.get_crystalz(session["username"])
+    link = reddit_api.get_link()
+    return render_template("shop.html", crystalz = crystalz, url = link[1], title =  link[0] )
 
 
 @app.route("/logout")

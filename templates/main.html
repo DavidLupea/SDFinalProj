@@ -1,9 +1,25 @@
-Welcome to main page
-<br>
-<a href = "/logout"> Logout </a>
-<br>
-<a href = "/create_project"> Create Project </a>
-<br>
-<a href = "/view_projects"> View Projects </a>
-<br>
-<a href = "/shop"> Shop </a>
+{% extends 'template_nav_bar.html' %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <br>
+  <br>
+  <font color="white"><h1 class="text-center">Welcome to main page</h1></font>
+</div>
+<div class="card-group">
+  <div class="card">
+    <form action="/create_project" method="GET">
+      <center><input class="btn btn-danger" type="submit" value="Create Project"></center>
+    </form>
+  </div>
+  <div class="card">
+    <form action="/view_projects" method="GET">
+      <center><input class="btn btn-danger" type="submit" value="View Projects"></center>
+    </form>
+  </div>
+</div>
+{% endblock %}
