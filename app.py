@@ -3,7 +3,7 @@ from db import db_utils, db_builder
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
+app.secret_key = "apple pie"
 db_builder.create_tables()
 
 @app.route("/")
@@ -57,8 +57,6 @@ def process_project():
 @app.route("/view_projects")
 def view_projects():
     project_list = db_utils.get_projects(session["username"])
-    print("PROJECT LIST")
-    print(project_list)
     return render_template("project_lists.html", project_list = project_list)
 
 @app.route("/actually_view_projects")
@@ -66,24 +64,25 @@ def list_projects():
     username = request.args["project"].split("_")[0]
     if session["username"] == username:
         session["project"] = request.args["project"]
-        print(request.args)
-        print("SESSION OF PROJECT")
-        print(session["project"])
         tasks = db_utils.get_task(session["project"])
-        return render_template("project.html", owner = True, task = tasks)
+        meetings = db_utils.get_meeting(session["project"])
+        return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
 @app.route("/process_task")
 def process_task():
     db_utils.add_task(request.args["username"], session["project"], request.args["task_name"], request.args["task_desc"], request.args["due_date"], request.args["crystalz"])
     tasks = db_utils.get_task(session["project"])
-    return render_template("project.html", owner = True, task = tasks)
+    meetings = db_utils.get_meeting(session["project"])
+    return render_template("project.html", owner = True, task = tasks, meeting = meetings)
 
 @app.route("/process_meeting")
 def process_meeting():
     db_utils.add_meeting(session["project"], request.args["meeting_desc"], request.args["meeting_location"], request.args["meeting_date"])
     tasks = db_utils.get_task(session["project"])
-    return render_template("project.html", owner = True, task = tasks)
+    meetings = db_utils.get_meeting(session["project"])
+
+    return render_template("project.html", owner = True, task = tasks, meeting = meetings)
 
 @app.route("/complete_task")
 def complete_task():
@@ -91,14 +90,16 @@ def complete_task():
     print(request.args["submit"].split("'"))
     print("------------------------------------")
     print(request.args["submit"].split("'")[5])
+    
     task_name = request.args["submit"].split("'")[1]
     task_assigned = request.args["submit"].split("'")[5]
     crystalz = request.args["submit"].split("'")[3]
-    db_utils.complete_task(session["project"], task_name, crystalz,task_assigned)
+    db_utils.complete_task(session["project"], task_name, crystalz, task_assigned)
     username = session["project"].split("_")[0]
     if session["username"] == username:
         tasks = db_utils.get_task(session["project"])
-        return render_template("project.html", owner = True, task = tasks)
+        meetings = db_utils.get_meeting(session["project"])
+        return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
 @app.route("/shop")

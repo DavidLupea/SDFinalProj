@@ -90,20 +90,23 @@ def add_task(username, project_name, task_name, task_desc, due_date, crystalz):
     db.close()
 
 def get_task(project_name):
-    print("------------------------------------------")
-    print(project_name)
     project_name = replace_spaces(project_name)
-    print("------------------------------------------")
-    print(project_name)
-    print("------------------------------------------")
     db = sqlite3.connect("database.db")
     c = db.cursor()
     command = "SELECT task_name, task_desc, task_assigned, task_status, task_due_date, task_worth FROM {}".format(project_name)
     tasks = list(c.execute(command))
-    # for task in tasks:
-    #     task = replace_spaces(task)
     db.close()
     return tasks
+
+def get_meeting(project_name):
+    project_name = replace_spaces(project_name)
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+	# change the command
+    command = "SELECT task_name, task_desc, task_assigned, task_status, task_due_date, task_worth FROM {}".format(project_name)
+    meetings = list(c.execute(command))
+    db.close()
+    return meetings
 
 def add_meeting(project_name, meeting_desc, meeting_location, meeting_date):
     project_name = replace_spaces(project_name)
@@ -124,6 +127,7 @@ def complete_task(project_name, task_name, crystalz, username):
     command = command.format(project_name, task_name)
     user_crystalz = "SELECT crystalz FROM users WHERE username = '{}';"
     user_crystalz = user_crystalz.format(username)
+    print(user_crystalz)
     total_crystalz = int(crystalz) + int(list(c.execute(user_crystalz))[0][0])
     command2 = "UPDATE users SET crystalz = {} WHERE username = '{}';"
     command2 = command2.format(total_crystalz, username)

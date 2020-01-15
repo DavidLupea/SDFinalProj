@@ -51,4 +51,9 @@
     {% for i in task %}
       {{i}} <input type = "submit" value = "Submit '{{i[0]}}' for '{{i[5]}}' for user '{{i[2]}}'" name = "submit"> <br> <br>
     {% endfor %}
+    <hr>
+    <b> These are the project's current meetings: </b> <br>
+    {% for i in meeting %}
+      {{i}} <br> <br>
+    {% endfor %}
     </form>
