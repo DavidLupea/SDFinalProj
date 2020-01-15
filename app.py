@@ -104,7 +104,7 @@ def shop():
 @app.route("/process_purchase")
 def purchase():
     crystalz = db_utils.get_crystalz(session["username"])
-    if (db_utils.get_crystalz(session["username"]) < 0):
+    if (db_utils.get_crystalz(session["username"]) < 100):
         return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
     db_utils.spend_crystalz(session["username"])
     crystalz = db_utils.get_crystalz(session["username"])
