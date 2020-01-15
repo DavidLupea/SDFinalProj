@@ -152,3 +152,9 @@ def get_crystalz(username):
     db.commit()
     db.close()
     return crystalz[0][0]
+
+def is_valid_project():
+	# in the future, needs to check:
+	# 1. if owner is in the project
+	# 2. if there are users there who aren't registered
+	return True
