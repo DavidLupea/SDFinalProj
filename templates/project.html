@@ -1,13 +1,13 @@
-<!-- {% extends 'templates.html' %} -->
+{% extends 'templates.html' %}
 
-<!-- {% block title %}
+{% block title %}
     Login
-{% endblock %} -->
+{% endblock %}
 
-<!-- {% block body %} -->
-<!-- <div class="container">
+{% block body %}
+<div class="container">
   <div class="card border-0 shadow my-5">
-    <div class="card-body p-5"> -->
+    <div class="card-body p-5">
 <div>
     <div>
         <div>
@@ -37,6 +37,7 @@
           </form>
           <hr>
           <b> Add meetup: </b> <br>
+          <div>
           <form action = "\process_meeting" method = "GET">
             Meeting description:
             <br>
@@ -53,6 +54,20 @@
             <br> <br>
             <input type = "submit" value = "Submit">
           </form>
+
+          <!-- Replace this form with a button, make that button
+            have an onclick which leads to a function that displays
+            1. a short list of locations
+            2. map of  things -->
+          <div id = "d" style = "visibility: hidden">
+            Please enter a location type:
+            <input type = "text" id = "type_mapquest" required> <br>
+            Please enter a center location:
+            <input type = "text" id = "location_mapquest" required> <br>
+
+            <button id = "b"> Get Locations </button>
+        </div>
+      </div>
           <hr>
         {% endif %}
           <h3> These are the project's current tasks: </h3>
@@ -65,24 +80,68 @@
       {% if i[3] == 'Incomplete' %}
          <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
       {% endif %}
-
-
-      <script>
-        var l = document.getElementById("l")
-
-        var add_location = function(e) {
-            console.log("Hello")
-        }
-
-        l.addEventListener("mouseover", add_location)
-      </script>
-
-
-
       <br>
       Due by: {{i[4]}} <br> <br>
     {% endfor %}
     <hr>
+    <script>
+    var l = document.getElementById("l");
+    var d = document.getElementById("d");
+    var meeting_form = document.getElementById("b");
+
+    var typ = document.getElementById("type_mapquest")
+    var locat = document.getElementById("location_mapquest")
+
+
+    var process_click = function(e) {
+        console.log("hello hi")
+    }
+    var get_locations = function(e) {
+        address = locat.value
+        sic_code = "799951"
+        key = "lO96TAirGall6dnGhIgd0OsvJqBx4qg6"
+
+        link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key
+
+        console.log(link)
+
+        var request = new XMLHttpRequest()
+        request.open('GET', link, true)
+
+        request.onload = function() {
+            var data = JSON.parse(this.response)
+            locations = data["searchResults"]
+            for (let i = 0; i < locations.length; i++) {
+                var node = document.createElement("p");
+                console.log(locations[i])
+                node.innerHTML = locations[i]["name"]
+                input = document.createElement("button")
+                node.addEventListener("click", process_click)
+                node.appendChild(input)
+                // add a button to be able to select location
+                d.appendChild(node);
+            }
+            console.log(typ.value)
+            console.log(locat.value)
+        }
+        request.send()
+    }
+
+    var add_location = function(e) {
+        console.log(d);
+        d.style.visibility = "visible";
+        console.log("Hello");
+    };
+
+    meeting_form.addEventListener("click", get_locations);
+    l.addEventListener("click", add_location);
+
+
+
+    </script>
+
+
+
     <h3> These are the project's current meetings: </h3>
     {% for i in meeting %}
       <b>{{i[0]}}</b> <br>
@@ -94,4 +153,4 @@
   </div>
 </div>
 
-<!-- {% endblock %} -->
+{% endblock %}
