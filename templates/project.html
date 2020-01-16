@@ -8,6 +8,9 @@
 <div class="container">
   <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
+<div>
+    <div>
+        <div>
       {%if owner%}
         <b> Add task: </b> <br>
           <form action = "\process_task" method = "GET">
@@ -34,6 +37,7 @@
           </form>
           <hr>
           <b> Add meetup: </b> <br>
+          <div>
           <form action = "\process_meeting" method = "GET">
             Meeting description:
             <br>
@@ -41,7 +45,7 @@
             <br>
             Meeting location:
             <br>
-            <input type = "text" name = "meeting_location" required>
+            <div> <input type = "text" id = "l" name = "meeting_location" required> </div>
             <br>
             Meeting Date:
             <br>
@@ -50,6 +54,16 @@
             <br> <br>
             <input type = "submit" value = "Submit">
           </form>
+          <div id = "d" style = "visibility: hidden">
+            Please enter a location type:
+            <select id = "type_mapquest" required>
+            </select> <br>
+            Please enter a center location:
+            <input type = "text" id = "location_mapquest" required> <br>
+
+            <button id = "b"> Get Locations </button>
+        </div>
+      </div>
           <hr>
         {% endif %}
           <h3> These are the project's current tasks: </h3>
@@ -66,6 +80,115 @@
       Due by: {{i[4]}} <br> <br>
     {% endfor %}
     <hr>
+    <script>
+    var l = document.getElementById("l");
+    var d = document.getElementById("d");
+    var meeting_form = document.getElementById("b");
+
+    var typ = document.getElementById("type_mapquest")
+    var locat = document.getElementById("location_mapquest")
+    var list = []
+    list[0] = "401190	Train Stations"
+    list[1] = "581208	(All) Restaurants"
+    list[2] = "581228	Coffee Shops"
+    list[3] = "581248	Juice Bars"
+    list[4] = "581254	Restaurants Cyber Cafes"
+    list[5] = "581301	Bars"
+    list[6] = "581305	Pubs"
+    list[7] = "594201	Book Stores"
+    list[8] = "651201	Shopping Centers & Malls"
+    list[9] = "701101	Hotels & Motels"
+    list[10] = "822101	Colleges & Universities"
+    list[11] = "823106	Libraries"
+
+
+    var process_click = function(e) {
+        l.value = e["target"]["name"];
+    };
+
+    var get_locations = function(e) {
+        meeting_form.style.visibility = "hidden";
+        key = "lO96TAirGall6dnGhIgd0OsvJqBx4qg6";
+        address = locat.value + "|marker-red||";
+        for (let i = 0; i < list.length && i < 10; i++) {
+            let list_sic_code = list[i].slice(0, list[i].indexOf(String.fromCharCode(9)))
+            if (list_sic_code == typ.value) {
+                sic_code = list_sic_code;
+            }
+        }
+
+        var link = "https://www.mapquestapi.com/geocoding/v1/address?key=lO96TAirGall6dnGhIgd0OsvJqBx4qg6&inFormat=kvp&outFormat=json&location=87+Tompkins+Circle&thumbMaps=false"
+
+        var request = new XMLHttpRequest();
+        request.open('GET', link, true);
+
+        request.onload = function() {
+            var data = JSON.parse(this.response);
+            lat = data["results"][0]["locations"][0]["latLng"]["lat"];
+            lon = data["results"][0]["locations"][0]["latLng"]["lng"];
+            lat_lon_img = lat + "," + lon;
+        }
+        request.send()
+
+        link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key;
+
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', link, true);
+
+        var image = "placeholder"
+
+        request2.onload = function() {
+            var data = JSON.parse(this.response);
+            locations = data["searchResults"];
+            var locations_list = lat_lon_img
+            for (let i = 1; i < locations.length; i++) {
+                console.log(locations[i])
+                locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
+            }
+            center = lat_lon_img
+            var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
+
+            var image_container = document.createElement("p")
+            mapquest_image = document.createElement("img");
+
+            image_container.appendChild(mapquest_image)
+            mapquest_image.setAttribute("src", image)
+            mapquest_image.setAttribute("width", "100%")
+            d.appendChild(image_container)
+
+            for (let i = 1; i < locations.length; i++) {
+                var node = document.createElement("p");
+                node.innerHTML = "(" + i + ") " + "<b>" + locations[i]["name"] + "</b>" + "<br><br>" + "Type: " + locations[i]['fields']['group_sic_code_name'];
+                input = document.createElement("button");
+                input.setAttribute("name", locations[i]["name"]);
+                node.addEventListener("click", process_click);
+                node.appendChild(input);
+                d.appendChild(node);
+            }
+
+        }
+        request2.send()
+    }
+
+    var add_location = function(e) {
+        d.style.visibility = "visible";
+        for (let i = 0; i < list.length && i < 10; i++) {
+            var option = document.createElement("option")
+            option.setAttribute("value", list[i].slice(0, list[i].indexOf(String.fromCharCode(9))))
+            option.innerHTML = list[i].slice(1 + list[i].indexOf(String.fromCharCode(9)))
+            var container = document.getElementById("type_mapquest")
+            container.appendChild(option)
+        }
+    };
+    meeting_form.addEventListener("click", get_locations);
+    l.addEventListener("click", add_location);
+
+
+
+    </script>
+
+
+
     <h3> These are the project's current meetings: </h3>
     {% for i in meeting %}
       <b>{{i[0]}}</b> <br>
@@ -76,4 +199,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
