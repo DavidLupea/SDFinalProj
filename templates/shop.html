@@ -5,45 +5,41 @@
 {% endblock %}
 
 {% block body %}
-{% if text %}
-<h3>{{text}} </h3>
-{% endif %}
 
-You have {{crystalz}} Crystalz
-{%  if not url %}
-    Welcome to the Shop
-    <br>
-    <br>
-
-    Here you can take a break from all your work and go through random reddit posts
-
-    <br>
-    <br>
-    <form action = "/process_purchase" method = "GET">
-        <div>
-            <input type="radio" name = "item" value="Reddit 100"
-            checked>
-            <label for="huey">Reddit 100</label>
-        </div>
-
-        <div>
-            <input type="radio" name = "item" value="Wikipedia 200">
-            <label for="dewey">Wikipedia 200</label>
-        </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
-    </form>
-    <br>
-{% endif %}
-    You have {{crystalz}} Crystalz
-    <a href = {{url}}> {{title}} </a>
-    <br>
-    <a href = "/"> Main </a>
-<script>
-      function NewTab(url) {
-          window.open(
-            url, "_blank");
-      }
-</script>
+<div class="container">
+  <br>
+  <br>
+  <font color="white"><h1 class="text-center">Welcome to the shop!</h1></font>
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-2">
+      <h6 class="text-center">Your balance is: {{crystalz}} Crystalz</h6>
+      {% if text %}
+      <h3>{{text}} </h3>
+      {% endif %}
+      {%  if not url %}
+          <br>
+          <h6 class="text-center">Here you can take a break from all your work and go through random Reddit or Wikipedia posts</h6>
+          <br>
+          <br>
+          Choose a method of relaxation:
+          <form action="/process_purchase" method="GET">
+            <input class="btn btn-danger" type="submit" name = "item" value="Reddit 100"> :100 Crystalz
+          </form>
+          <br>
+          <form action="/process_purchase" method="GET">
+            <input class="btn btn-danger" type="submit" name = "item" value="Wikipedia 200"> :200 Crystalz
+          </form>
+          <br>
+      {% endif %}
+          <a href = {{url}}> {{title}} </a>
+          <br>
+          <a href = "/"> Back to main page</a>
+      <script>
+        function NewTab(url) {
+            var win = window.open(url, "_blank");
+        }
+      </script>
+    </div>
+  </div>
+</div>
 {% endblock %}
