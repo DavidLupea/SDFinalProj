@@ -1,3 +1,10 @@
+{% extends 'template_nav_bar.html' %}
+
+{% block title %}
+    Shop
+{% endblock %}
+
+{% block body %}
 {% if text %}
 <h3>{{text}} </h3>
 {% endif %}
@@ -29,4 +36,14 @@ You have {{crystalz}} Crystalz
     </form>
     <br>
 {% endif %}
-<a href = "/"> Main </a>
+    You have {{crystalz}} Crystalz
+    <a href = {{url}}> {{title}} </a>
+    <br>
+    <a href = "/"> Main </a>
+<script>
+      function NewTab(url) {
+          window.open(
+            url, "_blank");
+      }
+</script>
+{% endblock %}
