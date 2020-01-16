@@ -1,6 +1,7 @@
 from flask import Flask, session, render_template, request, redirect, url_for
 from db import db_utils, db_builder
 import reddit_api
+import wikipedia_api
 import os
 
 app = Flask(__name__)
@@ -75,13 +76,14 @@ def view_projects():
 @app.route("/actually_view_projects")
 def list_projects():
     username = request.args["project"].split("_")[0]
+    session["project"] = request.args["project"]
+    tasks = db_utils.get_task(session["project"])
     if session["username"] == username:
         session["project"] = request.args["project"]
         tasks = db_utils.get_task(session["project"])
         tasks = remove_nulls(tasks)
         meetings = db_utils.get_meeting(session["project"])
         meetings = remove_nulls(meetings)
-
         return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
@@ -123,19 +125,21 @@ def shop():
     crystalz = db_utils.get_crystalz(session["username"])
     return render_template("shop.html", crystalz = crystalz)
 
-
-
 @app.route("/process_purchase")
 def purchase():
+    print(request.args["item"])
+    link_type = request.args["item"][:-4]
+    price = int(request.args["item"][-3:])
     crystalz = db_utils.get_crystalz(session["username"])
-    if (db_utils.get_crystalz(session["username"]) < 100):
+    if (db_utils.get_crystalz(session["username"]) < price):
         return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
-    db_utils.spend_crystalz(session["username"])
+    db_utils.spend_crystalz(session["username"], price)
     crystalz = db_utils.get_crystalz(session["username"])
-    link = reddit_api.get_link()
-    return render_template("shop.html", crystalz = crystalz, url = link[1], title =  link[0] )
-    # return render_template("shop.html", crystalz = crystalz, url = "link[1]", title =  "link[0]" )
-
+    if (link_type == "Reddit"):
+        link = reddit_api.get_link()
+    else:
+        link = wikipedia_api.get_link()
+    return render_template("purchase.html", crystalz = crystalz, url = link[1], title =  link[0])
 
 
 @app.route("/logout")
