@@ -80,6 +80,9 @@ Brian Moses -- 2020-01-15 23:00
 Devin Lin -- 2020-01-15 23:12
 	- Finished adding bootstrap to all of the other pages
 	- reformatted most pages to look better
-	
+
 Brian Moses -- 2020-01-15 23:30
 	- Added some error handling
+
+Devin Lin -- 2020-01-16 09:11
+	- Added flashing error messages
