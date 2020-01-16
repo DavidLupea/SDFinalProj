@@ -4,7 +4,7 @@ import reddit_api
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
+app.secret_key = "applepie"
 db_builder.create_tables()
 
 @app.route("/")
@@ -63,9 +63,9 @@ def view_projects():
 @app.route("/actually_view_projects")
 def list_projects():
     username = request.args["project"].split("_")[0]
+    session["project"] = request.args["project"]
+    tasks = db_utils.get_task(session["project"])
     if session["username"] == username:
-        session["project"] = request.args["project"]
-        tasks = db_utils.get_task(session["project"])
         return render_template("project.html", owner = True, task = tasks)
     return render_template("project.html", task = tasks)
 
@@ -106,10 +106,12 @@ def purchase():
     crystalz = db_utils.get_crystalz(session["username"])
     if (db_utils.get_crystalz(session["username"]) < 100):
         return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
+
+    print(request.args("submit"))
     db_utils.spend_crystalz(session["username"])
     crystalz = db_utils.get_crystalz(session["username"])
     link = reddit_api.get_link()
-    return render_template("shop.html", crystalz = crystalz, url = link[1], title =  link[0] )
+    return render_template("shop.html", crystalz = crystalz, url = "link[1]", title =  "link[0]" )
 
 
 @app.route("/logout")
