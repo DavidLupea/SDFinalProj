@@ -45,3 +45,11 @@ Devin Lin -- 2020-01-12 20:02
 
 David Lupea -- 2020-01-13 20:25
 	- Added bootstrap to project page
+
+Mohidul Abedin -- 2019-01-14 21:08
+		- added reddit api
+
+David Lupea -- 2020-01-14 22:28
+	- Final deliverables in /doc/
+	- Changes to design document:
+		- Removed Google Calendar from APIs
