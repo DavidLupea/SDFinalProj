@@ -81,12 +81,13 @@ def list_projects():
     username = request.args["project"].split("_")[0]
     session["project"] = request.args["project"]
     tasks = db_utils.get_task(session["project"])
+    tasks = db_utils.get_task(session["project"])
+    tasks = remove_nulls(tasks)
+    meetings = db_utils.get_meeting(session["project"])
+    meetings = remove_nulls(meetings)
     if session["username"] == username:
         session["project"] = request.args["project"]
-        tasks = db_utils.get_task(session["project"])
-        tasks = remove_nulls(tasks)
-        meetings = db_utils.get_meeting(session["project"])
-        meetings = remove_nulls(meetings)
+        
         return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
@@ -115,11 +116,11 @@ def complete_task():
     task_name = request.args["submit"][request.args["submit"].find(" ") + 1:]
     db_utils.complete_task(session["project"], task_name)
     username = session["project"].split("_")[0]
+    tasks = db_utils.get_task(session["project"])
+    tasks = remove_nulls(tasks)
+    meetings = db_utils.get_meeting(session["project"])
+    meetings = remove_nulls(meetings)
     if session["username"] == username:
-        tasks = db_utils.get_task(session["project"])
-        tasks = remove_nulls(tasks)
-        meetings = db_utils.get_meeting(session["project"])
-        meetings = remove_nulls(meetings)
         return render_template("project.html", owner = True, task = tasks, meeting = meetings)
     return render_template("project.html", task = tasks)
 
