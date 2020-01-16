@@ -94,37 +94,67 @@
 
 
     var process_click = function(e) {
-        console.log("hello hi")
-    }
+        console.log(e["target"]["name"])
+        l.value = e["target"]["name"];
+    };
     var get_locations = function(e) {
-        address = locat.value
-        sic_code = "799951"
-        key = "lO96TAirGall6dnGhIgd0OsvJqBx4qg6"
 
-        link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key
+        key = "lO96TAirGall6dnGhIgd0OsvJqBx4qg6";
+        address = locat.value;
+        sic_code = "799951";
 
-        console.log(link)
+        var link = "https://www.mapquestapi.com/geocoding/v1/address?key=lO96TAirGall6dnGhIgd0OsvJqBx4qg6&inFormat=kvp&outFormat=json&location=87+Tompkins+Circle&thumbMaps=false"
 
-        var request = new XMLHttpRequest()
-        request.open('GET', link, true)
+        var request = new XMLHttpRequest();
+        request.open('GET', link, true);
 
         request.onload = function() {
-            var data = JSON.parse(this.response)
-            locations = data["searchResults"]
-            for (let i = 0; i < locations.length; i++) {
-                var node = document.createElement("p");
-                console.log(locations[i])
-                node.innerHTML = locations[i]["name"]
-                input = document.createElement("button")
-                node.addEventListener("click", process_click)
-                node.appendChild(input)
-                // add a button to be able to select location
-                d.appendChild(node);
-            }
-            console.log(typ.value)
-            console.log(locat.value)
+            var data = JSON.parse(this.response);
+            lat = data["results"][0]["locations"][0]["latLng"]["lat"]
+            lon = data["results"][0]["locations"][0]["latLng"]["lng"]
+            lat_lon_img = lat + "," + lon
+            lat_lon = lat_lon_img + "|marker-red||"
         }
         request.send()
+
+        link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key;
+
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', link, true);
+
+        request2.onload = function() {
+            var data = JSON.parse(this.response);
+            locations = data["searchResults"];
+            for (let i = 0; i < locations.length; i++) {
+                var node = document.createElement("p");
+                node.innerHTML = locations[i]["name"];
+                input = document.createElement("button");
+                input.setAttribute("name", locations[i]["name"]);
+                node.addEventListener("click", process_click);
+                node.appendChild(input);
+                d.appendChild(node);
+            }
+            var locations_list = lat_lon
+            for (let i = 0; i < locations.length; i++) {
+                locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
+            }
+            center = lat_lon_img
+            console.log(lat_lon)
+            console.log(locations_list)
+            var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
+            console.log(image)
+
+        }
+        request2.send()
+        // 
+        // console.log(image)
+        var request3 = new XMLHttpRequest();
+        request3.open('GET', image, true);
+
+        request3.onload = function() {
+            var data = JSON.parse(this.response);
+        }
+        request3.send()
     }
 
     var add_location = function(e) {
