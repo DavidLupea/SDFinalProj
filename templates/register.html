@@ -31,11 +31,9 @@
         </div>
         <input class="btn btn-success btn-block mb-2" type="Submit" value="Submit" required/>
         {% with errors = get_flashed_messages() %}
-            <ul>
-                {% for error in errors %}
-                    <li class="text-danger">{{ error }}</li>
-                {% endfor %}
-            </ul>
+          {% for error in errors %}
+              <li class="text-danger">{{ error }}</li>
+          {% endfor %}
         {% endwith %}
         <a href="/login">Return to login</a>
       </form>
