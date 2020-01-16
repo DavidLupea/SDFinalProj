@@ -62,3 +62,6 @@ Mohidul Abedin -- 2019-01-14 22:44
 Brian Moses -- 2019-01-15 23:00
 	- Finished mapquest API
 	- Fixed space errors
+
+Brian Moses -- 2019-01-15 23:30
+	- Added some error handling

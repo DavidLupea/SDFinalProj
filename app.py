@@ -55,17 +55,20 @@ def create_project():
 
 @app.route("/process_project")
 def process_project():
-    if db_utils.is_valid_project(request.args):
-        db_builder.create_projects(session["username"], request.args["title"])
+    try:
         members = request.args.to_dict()
         project_name = session["username"] + "_" + request.args["title"]
         i = 1
         while (i < len(request.args)):
-            db_utils.add_member(project_name, list(members.values())[i])
             db_utils.add_project(list(members.values())[i], project_name)
             i += i
+        db_builder.create_projects(session["username"], request.args["title"])
+        i = 1
+        while (i < len(request.args)):
+            db_utils.add_member(project_name, list(members.values())[i])
+            i += i
         return render_template("main.html")
-    else:
+    except:
         return render_template("main.html")
 
 @app.route("/view_projects")

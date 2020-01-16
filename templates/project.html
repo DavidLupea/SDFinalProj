@@ -123,7 +123,7 @@
         var link = "https://www.mapquestapi.com/geocoding/v1/address?key=lO96TAirGall6dnGhIgd0OsvJqBx4qg6&inFormat=kvp&outFormat=json&location=87+Tompkins+Circle&thumbMaps=false"
 
         var request = new XMLHttpRequest();
-        request.open('GET', link, true);
+        request.open('GET', link, false);
 
         request.onload = function() {
             var data = JSON.parse(this.response);
@@ -131,63 +131,62 @@
             lon = data["results"][0]["locations"][0]["latLng"]["lng"];
             lat_lon_img = lat + "," + lon;
         }
-        request.send()
+        try {
+            request.send()
+            link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key;
 
-        link = "https://www.mapquestapi.com/search/v2/radius?origin=" + address + "&radius=2&maxMatches=100&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|" + sic_code + "&declutter=true&outFormat=json&key=" + key;
+            var request2 = new XMLHttpRequest();
+            request2.open('GET', link, false);
 
-        var request2 = new XMLHttpRequest();
-        request2.open('GET', link, true);
+            var image = "placeholder"
 
-        var image = "placeholder"
+            request2.onload = function() {
+                var data = JSON.parse(this.response);
+                locations = data["searchResults"];
+                var locations_list = lat_lon_img + "|marker-red||"
+                for (let i = 1; i < locations.length; i++) {
+                    locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
+                }
+                center = lat_lon_img
+                var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
+                var image_container = document.createElement("p")
+                mapquest_image = document.createElement("img");
 
-        request2.onload = function() {
-            var data = JSON.parse(this.response);
-            locations = data["searchResults"];
-            var locations_list = lat_lon_img + "|marker-red||"
-            for (let i = 1; i < locations.length; i++) {
-                console.log(locations[i])
-                locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
+                image_container.appendChild(mapquest_image);
+                mapquest_image.setAttribute("src", image);
+                mapquest_image.setAttribute("width", "100%");
+                d.appendChild(image_container);
+
+                for (let i = 1; i < locations.length; i++) {
+                    var node = document.createElement("p");
+                    node.innerHTML = "(" + i + ") " + "<b>" + locations[i]["name"] + "</b>" + "<br><br>" + "Type: " + locations[i]['fields']['group_sic_code_name'];
+                    input = document.createElement("button");
+                    input.setAttribute("name", locations[i]["name"]);
+                    node.addEventListener("click", process_click);
+                    node.appendChild(input);
+                    d.appendChild(node);
+                }
+
             }
-            center = lat_lon_img
-            var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
-            console.log(image)
-            var image_container = document.createElement("p")
-            mapquest_image = document.createElement("img");
-
-            image_container.appendChild(mapquest_image)
-            mapquest_image.setAttribute("src", image)
-            mapquest_image.setAttribute("width", "100%")
-            d.appendChild(image_container)
-
-            for (let i = 1; i < locations.length; i++) {
-                var node = document.createElement("p");
-                node.innerHTML = "(" + i + ") " + "<b>" + locations[i]["name"] + "</b>" + "<br><br>" + "Type: " + locations[i]['fields']['group_sic_code_name'];
-                input = document.createElement("button");
-                input.setAttribute("name", locations[i]["name"]);
-                node.addEventListener("click", process_click);
-                node.appendChild(input);
-                d.appendChild(node);
-            }
-
+            request2.send();
         }
-        request2.send()
-
-        if (document.getElementsByTagName("p").length == 0) {
+        catch {
             var node = document.createElement("p");
             node.innerHTML = '<font color = "red"> <h3> Sorry, an error occured </h3></font>';
             d.appendChild(node);
         }
+
 
     }
 
     var add_location = function(e) {
         d.style.visibility = "visible";
         for (let i = 0; i < list.length && i < 10; i++) {
-            var option = document.createElement("option")
-            option.setAttribute("value", list[i].slice(0, list[i].indexOf(String.fromCharCode(9))))
-            option.innerHTML = list[i].slice(1 + list[i].indexOf(String.fromCharCode(9)))
-            var container = document.getElementById("type_mapquest")
-            container.appendChild(option)
+            var option = document.createElement("option");
+            option.setAttribute("value", list[i].slice(0, list[i].indexOf(String.fromCharCode(9))));
+            option.innerHTML = list[i].slice(1 + list[i].indexOf(String.fromCharCode(9)));
+            var container = document.getElementById("type_mapquest");
+            container.appendChild(option);
         }
     };
     meeting_form.addEventListener("click", get_locations);

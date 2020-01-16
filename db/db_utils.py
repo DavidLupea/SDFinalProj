@@ -158,15 +158,3 @@ def spend_crystalz(username, price):
     c.execute(command)
     db.commit()
     db.close()
-
-def is_valid_project(arguments):
-    db = sqlite3.connect("database.db")
-    c = db.cursor()
-	# in the future, needs to check:
-	# 1. if owner is in the project
-	#	compare request.args of 1 to len(request.args) with session["username"]
-	# 2. if there are users there who aren't registered
-	# 	compare request.args of 1 to len(request.args) with users DB
-    db.close()
-    return True
-
