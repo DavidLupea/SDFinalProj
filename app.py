@@ -124,6 +124,7 @@ def complete_task():
 def shop():
     crystalz = db_utils.get_crystalz(session["username"])
     return render_template("shop.html", crystalz = crystalz)
+
 @app.route("/process_purchase")
 def purchase():
     print(request.args["item"])
@@ -139,20 +140,6 @@ def purchase():
     else:
         link = wikipedia_api.get_link()
     return render_template("purchase.html", crystalz = crystalz, url = link[1], title =  link[0])
-
-
-
-@app.route("/process_purchase")
-def purchase():
-    crystalz = db_utils.get_crystalz(session["username"])
-    if (db_utils.get_crystalz(session["username"]) < 100):
-        return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
-    db_utils.spend_crystalz(session["username"])
-    crystalz = db_utils.get_crystalz(session["username"])
-    link = reddit_api.get_link()
-    return render_template("shop.html", crystalz = crystalz, url = link[1], title =  link[0] )
-    # return render_template("shop.html", crystalz = crystalz, url = "link[1]", title =  "link[0]" )
-
 
 
 @app.route("/logout")

@@ -53,3 +53,7 @@ David Lupea -- 2020-01-14 22:28
 	- Final deliverables in /doc/
 	- Changes to design document:
 		- Removed Google Calendar from APIs
+
+Brian Moses -- 2019-01-15 23:00
+	- Finished mapquest API
+	- Fixed space errors
