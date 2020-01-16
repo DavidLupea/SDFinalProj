@@ -1,36 +1,51 @@
-This is the page for creating a project. <br>
+{% extends 'template_nav_bar.html' %}
 
-<button id = "b"> + </button>
+{% block title %}
+    Create Project
+{% endblock %}
 
-<form action = "\process_project" method = "GET">
-  <div>
-    Title:
-    <input type = "text" name = "title">
-    <p> Member 0:
-    <input type = "text" name = "member_0">
-    </p>
+{% block body %}
+<div class="container">
+  <br>
+  <br>
+  <font color="white"><h1 class="text-center">Create a project</h1></font>
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-2">
+
+      <form action = "\process_project" method = "GET">
+        <div>
+          <input class="btn btn-success btn mb-2" type="button" id = "b" value="Add member"></input>
+          <br>
+          Title:
+          <br>
+          <input type = "text" name = "title">
+          <p> Member 0:
+          <br>
+          <input type = "text" name = "member_0">
+          </p>
+        </div>
+        <input class="btn btn-success btn mb-2" type="Submit" value="Submit" required/>
+        <script>
+        var count_members = 0;
+        var button = document.getElementById("b");
+
+        var add_member = function(e) {
+          count_members++;
+
+          var node = document.createElement("p");
+          node.innerHTML = "Member " + count_members + ": "
+          form = document.createElement("input");
+          node.appendChild(form);
+          form.setAttribute("name", "member_" + count_members);
+          document.getElementsByTagName("div")[0].appendChild(node);
+        }
+
+        button.addEventListener("click", add_member);
+        </script>
+      </form>
+
+      <a href = "/"> Back to main page</a>
+    </div>
   </div>
-  <div>
-    <input type = "submit" value = "Submit">
-  </div>
-</form>
-
-<script>
-var count_members = 0;
-var button = document.getElementById("b");
-
-var add_member = function(e) {
-  count_members++;
-
-  var node = document.createElement("p");
-  node.innerHTML = "Member " + count_members + ": "
-  form = document.createElement("input");
-  node.appendChild(form);
-  form.setAttribute("name", "member_" + count_members);
-  document.getElementsByTagName("div")[0].appendChild(node);
-}
-
-button.addEventListener("click", add_member);
-
-</script>
-<a href = "/"> Back to main page </a>
+</div>
+{% endblock %}
