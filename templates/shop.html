@@ -1,11 +1,10 @@
 {% if text %}
 <h3>{{text}} </h3>
 {% endif %}
+
+You have {{crystalz}} Crystalz
 {%  if not url %}
     Welcome to the Shop
-    <br>
-    <br>
-    You have {{crystalz}} Crystalz
     <br>
     <br>
 
@@ -13,21 +12,21 @@
 
     <br>
     <br>
-    <form action = "\process_purchase" method = "GET">
-        Buy a Reddit Post
-        <br>
-        <input type = "submit" value = "Reddit 100">
-        <br>
+    <form action = "/process_purchase" method = "GET">
+        <div>
+            <input type="radio" name = "item" value="Reddit 100"
+            checked>
+            <label for="huey">Reddit 100</label>
+        </div>
+
+        <div>
+            <input type="radio" name = "item" value="Wikipedia 200">
+            <label for="dewey">Wikipedia 200</label>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
     </form>
     <br>
 {% endif %}
-    You have {{crystalz}} Crystalz
-    <a href = {{url}}> {{title}} </a>
-    <br>
-    <a href = "/"> Main </a>
-<script>
-      function NewTab(url) {
-          window.open(
-            url, "_blank");
-      }
-</script>
+<a href = "/"> Main </a>

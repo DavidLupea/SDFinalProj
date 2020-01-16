@@ -3,16 +3,18 @@ import sqlite3
 import json
 import time
 import os
+import requests
 import urllib.request
 
-SUBREDDIT_LIST = ["worldnews", "news", "technology", "InternetIsBeautiful"]
+SUBREDDIT_LIST = ["worldnews", "news", "technology", "InternetIsBeautiful", "chemicalreactiongifs", "nostalgia", "todayilearned"]
 
 # RETURN VALUE a list index 0 is title and 1 is link
 def get_link():
-    random_number = random.randint(0,4)
+    random_number = random.randint(0,2)
     output = []
-    jsonFile = "https://www.reddit.com/r/{}/hot.json?limit=5"
+    jsonFile = "https://www.reddit.com/r/{}/hot.json?limit=3"
     jsonFile = jsonFile.format(random.choice(list(SUBREDDIT_LIST)))
+    requests.get(jsonFile, headers = {'User-agent': 'your bot 0.1'})
     request = urllib.request.urlopen(jsonFile)
     response = request.read()
     result = json.loads(response)

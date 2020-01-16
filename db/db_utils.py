@@ -148,6 +148,17 @@ def get_crystalz(username):
     db.close()
     return crystalz[0][0]
 
+
+def spend_crystalz(username, price):
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+    new_crystalz = int(get_crystalz(username)) - price
+    print(new_crystalz)
+    command = "UPDATE users SET crystalz = {} WHERE username = '{}';".format(new_crystalz,username)
+    c.execute(command)
+    db.commit()
+    db.close()
+
 def is_valid_project(arguments):
     db = sqlite3.connect("database.db")
     c = db.cursor()
@@ -159,12 +170,3 @@ def is_valid_project(arguments):
     db.close()
     return True
 
-def spend_crystalz(username):
-	username = replace_spaces(username)
-	db = sqlite3.connect("database.db")
-	c = db.cursor()
-	command = "UPDATE users SET crystalz = crystalz - 100 WHERE username = '{}';"
-	command = command.format(username)
-	c.execute(command)
-	db.commit()
-	db.close()
