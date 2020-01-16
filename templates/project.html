@@ -109,7 +109,7 @@
     var get_locations = function(e) {
         meeting_form.style.visibility = "hidden";
         key = "lO96TAirGall6dnGhIgd0OsvJqBx4qg6";
-        address = locat.value;
+        address = locat.value + "|marker-red||";
         for (let i = 0; i < list.length && i < 10; i++) {
             let list_sic_code = list[i].slice(0, list[i].indexOf(String.fromCharCode(9)))
             if (list_sic_code == typ.value) {
@@ -127,7 +127,6 @@
             lat = data["results"][0]["locations"][0]["latLng"]["lat"];
             lon = data["results"][0]["locations"][0]["latLng"]["lng"];
             lat_lon_img = lat + "," + lon;
-            lat_lon = lat_lon_img + "|marker-red||";
         }
         request.send()
 
@@ -141,7 +140,7 @@
         request2.onload = function() {
             var data = JSON.parse(this.response);
             locations = data["searchResults"];
-            var locations_list = lat_lon
+            var locations_list = lat_lon_img
             for (let i = 1; i < locations.length; i++) {
                 console.log(locations[i])
                 locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
