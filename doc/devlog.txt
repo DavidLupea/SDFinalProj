@@ -53,3 +53,9 @@ David Lupea -- 2020-01-14 22:28
 	- Final deliverables in /doc/
 	- Changes to design document:
 		- Removed Google Calendar from APIs
+		
+
+Mohidul Abedin -- 2019-01-14 22:44
+		- added wikipedia api
+		- changed requiremnets.txt
+		- added api card
