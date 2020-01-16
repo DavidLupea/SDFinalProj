@@ -30,6 +30,13 @@
           <input type="text" class="form-control" name="full_name" required>
         </div>
         <input class="btn btn-success btn-block mb-2" type="Submit" value="Submit" required/>
+        {% with errors = get_flashed_messages() %}
+            <ul>
+                {% for error in errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endwith %}
         <a href="/login">Return to login</a>
       </form>
     </div>

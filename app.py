@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, flash
 from db import db_utils, db_builder
 import reddit_api
 import wikipedia_api
@@ -34,6 +34,7 @@ def login():
             session["username"] = username
             return render_template("main.html")
         else:
+            flash("Wrong username or password")
             render_template("login.html")
     return render_template("login.html")
 
@@ -47,6 +48,14 @@ def auth_register():
         db_utils.add_user(request.args["username"], request.args["password"], request.args["full_name"] )
         db_builder.create_username(request.args["username"])
         return render_template("login.html")
+    elif len(request.args["password"].strip()) == 0:
+        flash("Passwords must not be blank")
+    elif len(request.args["username"].strip()) == 0:
+        flash("Username must not be blank")
+    elif len(request.args["full_name"].strip()) == 0:
+        flash("Name must not be blank")
+    else:
+        flash("Username already exists")
     return render_template("register.html")   ### ADD FLASH ERROR
 
 @app.route("/create_project")

@@ -24,6 +24,9 @@
           <input type="password" class="form-control" name="password" required>
         </div>
         <input class="btn btn-success btn-block mb-2" type="Submit" value="Submit" required/>
+        {% with errors = get_flashed_messages() %}
+            <p class="text-danger">{{ errors[0] }}</p>
+        {% endwith %}
         <a href="/register">Don't have an account?</a>
       </form>
     </div>
