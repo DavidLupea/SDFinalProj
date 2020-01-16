@@ -1,6 +1,26 @@
+{% extends 'template_nav_bar.html' %}
 
-You have {{crystalz}} Crystalz
-<br>
-<a href = {{url}}> {{title}} </a>
-<br>
-<a href = "/"> Main </a>
+{% block title %}
+    Purchases
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <br>
+  <br>
+  <font color="white"><h1 class="text-center">Sit back and enjoy the post!</h1></font>
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-2">
+      <br>
+      <center><h4>{{title}}</h4>
+        <br>
+      <form action="{{url}}">
+        <input class="btn btn-danger" type="submit" value="View Post">
+      </form></center>
+      <br>
+      <br>
+      <a href = "/"> Back to main page</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
