@@ -37,8 +37,7 @@
           form = document.createElement("input");
           node.appendChild(form);
           form.setAttribute("name", "member_" + count_members);
-          // document.getElementsByTagName("div")[0].appendChild(node);
-          f.appendChild(node);
+          //document.getElementsByTagName("div")[0].appendChild(node);
         }
 
         button.addEventListener("click", add_member);
