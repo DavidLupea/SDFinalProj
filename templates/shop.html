@@ -1,11 +1,9 @@
 {% if text %}
 <h3>{{text}} </h3>
 {% endif %}
+You have {{crystalz}} Crystalz
 {%  if not url %}
     Welcome to the Shop
-    <br>
-    <br>
-    You have {{crystalz}} Crystalz
     <br>
     <br>
 
@@ -18,10 +16,12 @@
         <br>
         <input type = "submit" value = "Reddit 100">
         <br>
+        <br>
+        <input type = "submit" value = "Wikipedia 200">
+        <br>
     </form>
     <br>
 {% endif %}
-    You have {{crystalz}} Crystalz
     <a href = {{url}}> {{title}} </a>
     <br>
     <a href = "/"> Main </a>
