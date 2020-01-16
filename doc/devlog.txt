@@ -1,19 +1,19 @@
-Team -- 2019-01-05 19:15
+Team -- 2020-01-05 19:15
 	- finalized design doc
 
-Brian Moses -- 2019-01-06 14:45
+Brian Moses -- 2020-01-06 14:45
 	- added routes for login
 
-Mohidul Abedin -- 2019-01-07 17:56
+Mohidul Abedin -- 2020-01-07 17:56
 	- finished up:
 		- registering
 		- logging into session
 		- logging out
 
-Brian Moses -- 2019-01-07 22:14
+Brian Moses -- 2020-01-07 22:14
 	- fixed bug with login
 
-David Lupea -- 2019-01-08 09:00
+David Lupea -- 2020-01-08 09:00
 	- deadlines.txt
 		- Includes deadlines for each member
 	- Changes to design document:
@@ -21,32 +21,46 @@ David Lupea -- 2019-01-08 09:00
 		- Removed unnecessary arrow in sitemap
 		- Added a few columns to database
 
-Mohidul Abedin and Brian Moses -- 2019-01-08 19:23
+Devin Lin -- 2020-01-08 09:23
+	- created a jinja template
+	- made requirements document
+
+Mohidul Abedin and Brian Moses -- 2020-01-08 19:23
 	- added create project
 
-Mohidul Abedin and Brian Moses -- 2019-01-08 21:43
+Mohidul Abedin and Brian Moses -- 2020-01-08 21:43
 	- users can now view their projects
 	- owner can now assign tasks
 
-Mohidul Abedin and Brian Moses -- 2019-01-09 9:15
+Mohidul Abedin and Brian Moses -- 2020-01-09 9:15
 	- added create meeting
 
-Brian Moses -- 2019-01-09 14:40
+Brian Moses -- 2020-01-09 14:40
 	- fixed view tasks
-	- started on comlete tasks
+	- started on complete tasks
 
+Devin Lin -- 2020-01-09 15:57
+	- added get project tasks
 
-Mohidul Abedin -- 2019-01-11 19:58
+Mohidul Abedin -- 2020-01-11 19:58
 	- added a balance system
 	- finishing task now grants CRYSTALZ
 
 Devin Lin -- 2020-01-12 20:02
 	- added bootstrap to login and register pages
 
+Devin Lin -- 2020-01-13 09:10
+	- added a background to the template
+	- fixed login and register page and added cards
+
 David Lupea -- 2020-01-13 20:25
 	- Added bootstrap to project page
 
-Mohidul Abedin -- 2019-01-14 21:08
+Devin Lin -- 2020-01-14 21:34
+	- Added a template with nav bar
+	- Main page bootstrap is halfway done
+
+Mohidul Abedin -- 2020-01-14 21:08
 		- added reddit api
 
 David Lupea -- 2020-01-14 22:28
@@ -54,14 +68,18 @@ David Lupea -- 2020-01-14 22:28
 	- Changes to design document:
 		- Removed Google Calendar from APIs
 
-Mohidul Abedin -- 2019-01-14 22:44
+Mohidul Abedin -- 2020-01-14 22:44
 		- added wikipedia api
 		- changed requiremnets.txt
 		- added api card
 
-Brian Moses -- 2019-01-15 23:00
+Brian Moses -- 2020-01-15 23:00
 	- Finished mapquest API
 	- Fixed space errors
 
-Brian Moses -- 2019-01-15 23:30
+Devin Lin -- 2020-01-15 23:12
+	- Finished adding bootstrap to all of the other pages
+	- reformatted most pages to look better
+	
+Brian Moses -- 2020-01-15 23:30
 	- Added some error handling
