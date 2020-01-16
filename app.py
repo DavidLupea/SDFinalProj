@@ -1,6 +1,7 @@
 from flask import Flask, session, render_template, request, redirect, url_for
 from db import db_utils, db_builder
 import reddit_api
+import wikipedia_api
 import os
 
 app = Flask(__name__)
@@ -103,15 +104,19 @@ def shop():
     return render_template("shop.html", crystalz = crystalz)
 @app.route("/process_purchase")
 def purchase():
+    print(request.args["item"])
+    link_type = request.args["item"][:-4]
+    price = int(request.args["item"][-3:])
     crystalz = db_utils.get_crystalz(session["username"])
-    if (db_utils.get_crystalz(session["username"]) < 100):
+    if (db_utils.get_crystalz(session["username"]) < price):
         return render_template("shop.html", crystalz = crystalz, text = "Not enough Crystalz")
-
-    print(request.args("submit"))
-    db_utils.spend_crystalz(session["username"])
+    db_utils.spend_crystalz(session["username"], price)
     crystalz = db_utils.get_crystalz(session["username"])
-    link = reddit_api.get_link()
-    return render_template("shop.html", crystalz = crystalz, url = "link[1]", title =  "link[0]" )
+    if (link_type == "Reddit"):
+        link = reddit_api.get_link()
+    else:
+        link = wikipedia_api.get_link()
+    return render_template("purchase.html", crystalz = crystalz, url = link[1], title =  link[0])
 
 
 @app.route("/logout")

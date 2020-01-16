@@ -102,10 +102,10 @@ def get_crystalz(username):
     db.close()
     return crystalz[0][0]
 
-def spend_crystalz(username):
+def spend_crystalz(username, price):
     db = sqlite3.connect("database.db")
     c = db.cursor()
-    new_crystalz = int(get_crystalz(username)) - 100
+    new_crystalz = int(get_crystalz(username)) - price
     print(new_crystalz)
     command = "UPDATE users SET crystalz = {} WHERE username = '{}';".format(new_crystalz,username)
     c.execute(command)

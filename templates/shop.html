@@ -11,23 +11,21 @@ You have {{crystalz}} Crystalz
 
     <br>
     <br>
-    <form action = "\process_purchase" method = "GET">
-        Buy a Reddit Post
-        <br>
-        <input type = "submit" value = "Reddit 100">
-        <br>
-        <br>
-        <input type = "submit" value = "Wikipedia 200">
-        <br>
+    <form action = "/process_purchase" method = "GET">
+        <div>
+            <input type="radio" name = "item" value="Reddit 100"
+            checked>
+            <label for="huey">Reddit 100</label>
+        </div>
+
+        <div>
+            <input type="radio" name = "item" value="Wikipedia 200">
+            <label for="dewey">Wikipedia 200</label>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
     </form>
     <br>
 {% endif %}
-    <a href = {{url}}> {{title}} </a>
-    <br>
-    <a href = "/"> Main </a>
-<script>
-      function NewTab(url) {
-          window.open(
-            url, "_blank");
-      }
-</script>
+<a href = "/"> Main </a>
