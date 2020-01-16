@@ -122,6 +122,9 @@ def complete_task():
 def shop():
     crystalz = db_utils.get_crystalz(session["username"])
     return render_template("shop.html", crystalz = crystalz)
+
+
+
 @app.route("/process_purchase")
 def purchase():
     crystalz = db_utils.get_crystalz(session["username"])
@@ -131,6 +134,8 @@ def purchase():
     crystalz = db_utils.get_crystalz(session["username"])
     link = reddit_api.get_link()
     return render_template("shop.html", crystalz = crystalz, url = link[1], title =  link[0] )
+    # return render_template("shop.html", crystalz = crystalz, url = "link[1]", title =  "link[0]" )
+
 
 
 @app.route("/logout")
