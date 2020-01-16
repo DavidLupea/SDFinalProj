@@ -33,7 +33,7 @@
             <br>
             <input type="number" name="crystalz" min="10" max="1000" step = "10" required>
             <br> <br>
-            <input type = "submit" value = "Submit">
+            <input class="btn btn-success btn mb-2" type="Submit" value="Submit" required/>
           </form>
           <hr>
           <b> Add meetup: </b> <br>
@@ -46,24 +46,26 @@
             Meeting location:
             <br>
             <div> <input type = "text" id = "l" name = "meeting_location" required> </div>
-            <br>
             Meeting Date:
             <br>
             <input type="date" id="start_meeting" name="meeting_date"
             min="2020-01-01" required>
             <br> <br>
-            <input type = "submit" value = "Submit">
+            <input class="btn btn-success btn mb-2" type="Submit" value="Submit" required/>
           </form>
           <div id = "d" style = "visibility: hidden">
             Please enter a location type:
+            <br>
             <select id = "type_mapquest" required>
             </select> <br>
             Please enter an address:
+            <br>
             <input type = "text" id = "location_mapquest" required> <br>
             Please enter a MapQuest API Key:
+            <br>
             <input type = "text" id = "key_mapquest" required> <br>
 
-            <button id = "b"> Get Locations </button>
+            <input class="btn btn-success btn mb-2" id = "b" type="button" value="Get Locations" required/>
         </div>
       </div>
           <hr>
@@ -75,12 +77,11 @@
       <b>{{i[0]}}</b> <br>
       ({{i[1]}}) <br> <br>
       Assigned to: {{i[2]}} <br>
-      Status: {{i[3]}}
-      {% if i[3] == 'Incomplete' %}
-         <input type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
-      {% endif %}
-      <br>
+      Status: {{i[3]}} <br>
       Due by: {{i[4]}} <br> <br>
+      {% if i[3] == 'Incomplete' %}
+         <input class="btn btn-success btn mb-2" type = "submit" value = "Submit '{{i[0]}}'" name = "submit"> <br>
+      {% endif %}
     {% endfor %}
     <hr>
     <script>
