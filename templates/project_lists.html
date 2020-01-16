@@ -1,15 +1,32 @@
-This is a list of all your projects. <br>
+{% extends 'template_nav_bar.html' %}
 
-<b> Your Projects: </b>
-    <form method = "GET" action = "/actually_view_projects">
+{% block title %}
+    Create Project
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <br>
+  <br>
+  <font color="white"><h1 class="text-center">Your projects</h1></font>
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-2">
+      <br>
+
+      <form method = "GET" action = "/actually_view_projects">
         <select name = "project">
             {% for project in project_list %}
                 <option value= '{{project}}'> {{project}} </option>
             {% endfor %}
         </select>
-        <input type = "submit" value = "View project" />
+        <br>
+        <br>
+        <input class="btn btn-success btn mb-2" type="Submit" value="View Project" required/>
     </form>
 
-
-
-<a href = "/"> Back to main page </a>
+      <br>
+      <a href = "/"> Back to main page</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
