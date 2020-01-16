@@ -1,3 +1,10 @@
+{% extends 'template_nav_bar.html' %}
+
+{% block title %}
+    Shop
+{% endblock %}
+
+{% block body %}
 {% if text %}
 <h3>{{text}} </h3>
 {% endif %}
@@ -31,3 +38,4 @@
             url, "_blank");
       }
 </script>
+{% endblock %}
