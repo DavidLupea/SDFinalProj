@@ -54,11 +54,6 @@
             <br> <br>
             <input type = "submit" value = "Submit">
           </form>
-
-          <!-- Replace this form with a button, make that button
-            have an onclick which leads to a function that displays
-            1. a short list of locations
-            2. map of  things -->
           <div id = "d" style = "visibility: hidden">
             Please enter a location type:
             <input type = "text" id = "type_mapquest" required> <br>
@@ -122,10 +117,27 @@
         var request2 = new XMLHttpRequest();
         request2.open('GET', link, true);
 
+        var image = "placeholder"
+
         request2.onload = function() {
             var data = JSON.parse(this.response);
             locations = data["searchResults"];
+            var locations_list = lat_lon
             for (let i = 0; i < locations.length; i++) {
+                locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
+            }
+            center = lat_lon_img
+            var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
+
+            var image_container = document.createElement("p")
+            mapquest_image = document.createElement("img");
+
+            image_container.appendChild(mapquest_image)
+            mapquest_image.setAttribute("src", image)
+            mapquest_image.setAttribute("width", "100%")
+            d.appendChild(image_container)
+
+            for (let i = 1; i < locations.length; i++) {
                 var node = document.createElement("p");
                 node.innerHTML = locations[i]["name"];
                 input = document.createElement("button");
@@ -134,27 +146,9 @@
                 node.appendChild(input);
                 d.appendChild(node);
             }
-            var locations_list = lat_lon
-            for (let i = 0; i < locations.length; i++) {
-                locations_list += locations[i]["fields"]["lat"] + "," + locations[i]["fields"]["lng"] + "|marker-" + i + "||";
-            }
-            center = lat_lon_img
-            console.log(lat_lon)
-            console.log(locations_list)
-            var image = "https://www.mapquestapi.com/staticmap/v5/map?locations=" + locations_list + "&size=600,400@2x&&declutter=true&center=" + center + "&key=" + key
-            console.log(image)
 
         }
         request2.send()
-        // 
-        // console.log(image)
-        var request3 = new XMLHttpRequest();
-        request3.open('GET', image, true);
-
-        request3.onload = function() {
-            var data = JSON.parse(this.response);
-        }
-        request3.send()
     }
 
     var add_location = function(e) {
