@@ -44,3 +44,6 @@ Second, open your terminal. Then, type in the following commands sequentially:
 * python3 app.py
 
 Then, navigate to 127.0.0.1:5000 in a web browser. Copy and paste your MapQuest API key into the space indicated on the website.
+
+# Demonstration
+[Youtube Video](https://www.youtube.com/watch?v=g_Krb8Yjw-U)
